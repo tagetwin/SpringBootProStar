@@ -49,14 +49,14 @@ public class UserController {
 	}
 	
 	// 로그인 수행
-	@PostMapping("/login")
-	public @ResponseBody String login(ReqLoginDto dto) {
-		
-		int result = service.login(dto);
-		if(result == 1) {
-			return Script.href("로그인 성공", "board/myList");
-		}else {
-			return Script.back("로그인 실패");
-		}
-	}
+//	@PostMapping("/login")
+//	public @ResponseBody String login(ReqLoginDto dto) {
+//		
+//		int result = service.login(dto);
+//		if(result == 1) {
+//			return Script.href("로그인 성공", "board/myList");
+//		}else {
+//			return Script.back("로그인 실패");
+//		}
+//	}
 }

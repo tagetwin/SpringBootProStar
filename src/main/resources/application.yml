@@ -28,3 +28,6 @@ logging:
           descriptor:
             sql:
               BasicBinder: TRACE
+
+file:
+  path: C:/src/SpringBootProStar/img/

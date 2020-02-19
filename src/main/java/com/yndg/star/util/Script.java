@@ -15,7 +15,15 @@ public class Script {
 		StringBuffer sb = new StringBuffer();
 		sb.append("<script>");
 		sb.append("alert("+msg+");");
-		sb.append("hist;");
+		sb.append("history.back();");
+		sb.append("</script>");
+		return sb.toString();
+	}
+	
+	public static String ok(String msg) {
+		StringBuffer sb = new StringBuffer();
+		sb.append("<script>");
+		sb.append("alert("+msg+");");
 		sb.append("</script>");
 		return sb.toString();
 	}
