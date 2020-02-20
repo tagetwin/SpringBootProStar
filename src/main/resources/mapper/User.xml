@@ -9,14 +9,16 @@
 		VALUES(#{username}, #{password}, #{email})
 	</insert>
 
-	<select id="login" resultType="int">
-		SELECT COUNT(*) FROM user
-		WHERE username=#{username} AND PASSWORD = #{password};
+	<select id="authentication"	resultType="com.yndg.star.model.user.User">
+		SELECT * FROM user WHERE username = #{username}
 	</select>
 
-	<select id="authentication"
-		resultType="com.yndg.star.model.user.User">
-		select * from user where username = #{username}
+	<select id="findIdByUsername"	resultType="int">
+		SELECT id FROM user WHERE username = #{username}
 	</select>
-
+	
+	<select id="findUserById" resultType="com.yndg.star.model.user.dto.ResUserInfoDto">
+		SELECT username, profile, info FROM user WHERE id = #{id}
+	</select>
+	
 </mapper>

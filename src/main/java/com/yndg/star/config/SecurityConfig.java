@@ -46,10 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.csrf().disable();
 
 		http.authorizeRequests() // request 요청을
-				.antMatchers("/user/profile", "/post/write/**", "/post/delete/**", "/post/update/**") // 이
-																															// 주소는
-																															// .
-																															// 인증해야한다.
+				.antMatchers("/board/myList") // 이 주소는 인증해야한다
 				.authenticated().antMatchers("/admin/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_MANAGER')")
 				.anyRequest().permitAll()
 

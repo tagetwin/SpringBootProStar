@@ -9,8 +9,6 @@ import org.springframework.stereotype.Service;
 import com.yndg.star.model.user.User;
 import com.yndg.star.repository.UserRepository;
 
-import lombok.AllArgsConstructor;
-
 @Service
 public class MyUserDetailService implements UserDetailsService {
 	

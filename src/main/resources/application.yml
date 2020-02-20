@@ -30,4 +30,4 @@ logging:
               BasicBinder: TRACE
 
 file:
-  path: C:/src/SpringBootProStar/img/
+  path: C:/src/springbootWork/springboot-yndg-star/media/

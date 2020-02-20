@@ -8,14 +8,14 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @Getter
-public class Folow {
+public class Follow {
 	
 	private int id;
 	private int userId;
 	private int boardId;
 	
 	@Builder
-	public Folow(int userId, int boardId) {
+	public Follow(int userId, int boardId) {
 		this.userId = userId;
 		this.boardId = boardId;
 	}

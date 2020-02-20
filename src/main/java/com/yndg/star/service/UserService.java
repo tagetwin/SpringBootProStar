@@ -2,22 +2,22 @@ package com.yndg.star.service;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.yndg.star.model.user.User;
 import com.yndg.star.model.user.dto.ReqJoinDto;
-import com.yndg.star.model.user.dto.ReqLoginDto;
+import com.yndg.star.model.user.dto.ResUserInfoDto;
 import com.yndg.star.repository.UserRepository;
 
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @Service
-public class UserService implements UserRepository{
+public class UserService{
 
-	UserRepository rep;
-	BCryptPasswordEncoder encoder;
+	private UserRepository rep;
+	private BCryptPasswordEncoder encoder;
 	
-	@Override
+	@Transactional
 	public int join(ReqJoinDto dto) {
 		String password =  encoder.encode(dto.getPassword());
 		dto.setPassword(password);
@@ -26,20 +26,17 @@ public class UserService implements UserRepository{
 		return result;
 	}
 
-
-	@Override
-	public int login(ReqLoginDto dto) {
+	@Transactional
+	public int findIdByUsername(String username) {
 		
-		int result = rep.login(dto);
-		
+		int result = rep.findIdByUsername(username);
 		return result;
 	}
 
-
-	@Override
-	public User authentication(String username) {
-		// TODO Auto-generated method stub
-		return null;
+	public ResUserInfoDto findUserById(int id) {
+		ResUserInfoDto dto = rep.findUserById(id);
+		return dto;
 	}
+	
 
 }

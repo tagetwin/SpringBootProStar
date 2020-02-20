@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yndg.star.repository.BoardRepository">
+	
+	<select id="myListBoard" resultType="com.yndg.star.model.board.dto.ResMyListDto">
+		SELECT b.id, b.content, b.starCount, b.fileName, b.createDate, u.username
+		FROM board b LEFT JOIN user u
+		ON b.userid = u.id
+		WHERE u.id = (
+		SELECT f.followId
+		FROM user u LEFT JOIN follow f
+		ON u.id = f.userId
+		WHERE u.id = #{id})
+		ORDER BY b.id DESC
+	</select>
+
+	<insert id="write">
+		INSERT INTO board (content, fileName, userId) VALUES (#{content}, #{fileName}, #{id})
+	</insert>
+
+	<select id="writeList" resultType="com.yndg.star.model.board.dto.ResWriteListDto">
+		SELECT * FROM board WHERE userId = #{id}
+	</select>
+	
+	<select id="writeCount" resultType="int">
+		SELECT COUNT(*) FROM board WHERE userId = #{id}
+	</select>
+	
+	<select id="followCount" resultType="int">
+		SELECT COUNT(*) FROM follow WHERE userId = #{id}
+	</select>
+	
+	<select id="followerCount" resultType="int">
+		SELECT COUNT(*) FROM follow WHERE followId = #{id}
+	</select>
+	
+
+</mapper>

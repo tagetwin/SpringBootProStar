@@ -12,7 +12,6 @@ import lombok.ToString;
 public class Board {
 
 	private int id;
-	private String title;
 	private String content;
 	private int starCount;
 	private String fileName;
@@ -20,8 +19,7 @@ public class Board {
 	private int userId;
 	
 	@Builder
-	public Board(String title, String content, int starCount, String fileName, Date createDate, int userId) {
-		this.title = title;
+	public Board(String content, int starCount, String fileName, Date createDate, int userId) {
 		this.content = content;
 		this.starCount = starCount;
 		this.fileName = fileName;

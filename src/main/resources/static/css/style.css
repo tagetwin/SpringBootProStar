@@ -1,0 +1,66 @@
+@charset "UTF-8";
+.otherProfile {
+	height: 40px;
+	width: 40px;
+	border-radius: 20px;
+}
+
+#myProfile {
+	height: 60px;
+	width: 60px;
+	border-radius: 30px;
+}
+
+.p {
+	font-size: small;
+}
+.btn-file{
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
+#writeListImg {
+    width: 180px;
+    height: 180px;
+    border-radius: 90px;
+}
+.my_td{
+	width:100px
+}
+
+a:link {
+	color: black;
+	text-decoration: none;
+}
+
+a:visited {
+	color: black;
+	text-decoration: none;
+}
+
+a:hover {
+	color: black;
+	text-decoration: none;
+}
+@media screen and (max-width: 1400px) {
+	#myList_user {
+	 display : none;
+	}
+}
+
+    

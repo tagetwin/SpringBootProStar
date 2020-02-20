@@ -28,15 +28,17 @@ public class User implements UserDetails{
 	private String profile;
 	private Date createDate;
 	private String role;
+	private String info;
 	
 	@Builder
-	public User(String username, String password, String email, int phoneNum, String profile, String role) {
+	public User(String username, String password, String email, int phoneNum, String profile, String role, String info) {
 		this.username = username;
 		this.password = password;
 		this.email = email;
 		this.phoneNum = phoneNum;
 		this.profile = profile;
 		this.role = role;
+		this.info = info;
 	}
 
 	@Override
@@ -48,25 +50,21 @@ public class User implements UserDetails{
 
 	@Override
 	public boolean isAccountNonExpired() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
 	public boolean isEnabled() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 }
