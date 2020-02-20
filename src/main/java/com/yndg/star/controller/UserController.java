@@ -20,7 +20,7 @@ public class UserController {
 	UserService service;
 	
 	// 가입 페이지 홈
-	@GetMapping("/")
+	@GetMapping("")
 	public String join() {
 	
 		return "user/join";

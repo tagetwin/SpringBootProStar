@@ -9,11 +9,11 @@
 		VALUES(#{username}, #{password}, #{email})
 	</insert>
 
-	<select id="authentication"	resultType="com.yndg.star.model.user.User">
+	<select id="authentication"	resultType="com.yndg.star.model.user.MyUserDetails">
 		SELECT * FROM user WHERE username = #{username}
 	</select>
 
-	<select id="findIdByUsername"	resultType="int">
+	<select id="findIdByUsername" resultType="int">
 		SELECT id FROM user WHERE username = #{username}
 	</select>
 	

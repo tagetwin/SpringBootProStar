@@ -1,16 +1,28 @@
 package com.yndg.star.config;
 
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.RememberMeServices;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+
+import com.yndg.star.model.user.MyUserDetails;
 
 @Configuration // 메모리에 띄우기
 @EnableWebSecurity // 필터로 등록
@@ -28,6 +40,34 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService).passwordEncoder(encode());
+		auth.authenticationProvider(new AuthenticationProvider() {
+			
+			@Override
+			public boolean supports(Class<?> authentication) {
+				return true;
+			}
+			
+			@Override
+			@SuppressWarnings("unchecked")
+			public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+				
+				String username = (String) authentication.getPrincipal();
+				String password = (String) authentication.getCredentials();
+				MyUserDetails user = (MyUserDetails) userDetailsService.loadUserByUsername(username);
+				
+				if(!matchPassword(password, user.getPassword())) {
+		            throw new BadCredentialsException(username);
+		        }
+
+
+				return new UsernamePasswordAuthenticationToken(username, password, user.getAuthorities());
+			}
+
+			private boolean matchPassword(String loginPassword, String password2) {
+				
+				return loginPassword.equals(password2);
+			}
+		});
 	}
 	
 	@Override
@@ -43,8 +83,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception { // http 를 관리
-		http.csrf().disable();
-
+//		http.csrf().disable();
+		http.csrf().csrfTokenRepository(new CookieCsrfTokenRepository());
 		http.authorizeRequests() // request 요청을
 				.antMatchers("/board/myList") // 이 주소는 인증해야한다
 				.authenticated().antMatchers("/admin/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_MANAGER')")
@@ -55,10 +95,42 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.loginPage("/login")
 				.loginProcessingUrl("/login") // post 만 낚아챔
 				.failureUrl("/login")
-				.defaultSuccessUrl("/board/myList", true); // successHandler를 사용할 수 있음
+				.defaultSuccessUrl("/board/myList", true) // successHandler를 사용할 수 있음
+				
+				.and()
+				.rememberMe()
+				.rememberMeParameter("remember-me")
+				.key("uniqueAndSecret")
+				.tokenValiditySeconds(600);
+				
+//				.failureHandler(new AuthenticationFailureHandler() {
+//					
+//					@Override
+//					public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
+//							AuthenticationException exception) throws IOException, ServletException {
+//							String username = request.getParameter("username");
+//							System.out.println("username : " + username);
+//							System.out.println(exception.getMessage());
+//					}
+//				})
+//				.successHandler(new AuthenticationSuccessHandler() {
+//					
+//					@Override
+//					public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+//							Authentication authentication) throws IOException, ServletException {
+//								String username = request.getParameter("username");
+//								Cookie cookie = new Cookie("usernameCookie", username);
+//								response.addCookie(cookie);
+//								response.sendRedirect("/board/myList");
+//						
+//					}
+//				});
+		
+		
 		http.logout()
 			.logoutUrl("/logout")
 			.logoutSuccessUrl("/login")
+			.deleteCookies("JSESSIONID")
 			.invalidateHttpSession(true);
 		
 

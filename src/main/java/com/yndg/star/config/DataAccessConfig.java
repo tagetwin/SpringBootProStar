@@ -12,6 +12,7 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 @Configuration
 @MapperScan(basePackages = "com.yndg.star.repository")
+
 public class DataAccessConfig {
 
     @Bean
@@ -29,4 +30,6 @@ public class DataAccessConfig {
     public SqlSessionTemplate sqlSessionTemplate(SqlSessionFactory sqlSessionFactory) {
         return new SqlSessionTemplate(sqlSessionFactory);
     }
+    
+   
 }

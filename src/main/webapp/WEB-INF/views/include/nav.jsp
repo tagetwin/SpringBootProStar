@@ -35,8 +35,9 @@
 				<li class="nav-item"><a class="nav-link" href="#"><i class="far fa-compass fa-2x"></i></a></li>
 				<li class="nav-item"><a class="nav-link" href="#"><i class="far fa-heart fa-2x"></i></a></li>
 				<li class="nav-item"><a class="nav-link" href="/${principal.username}"><i class="far fa-user fa-2x"></i></a></li>
-				<li class="nav-item"><a class="nav-link" href="/logout"><i class="fas fa-sign-out-alt fa-2x"></i></a></li>
-				
+				<li class="nav-item">
+				<a class="nav-link" href="javascript:void(0);" onclick="logout()"><i class="fas fa-sign-out-alt fa-2x"></i></a>
+				</li>
 			</ul>
 		</div>
 
@@ -44,4 +45,8 @@
 			<span class="navbar-toggler-icon"></span>
 		</button>
 	</nav>
+	<form id="logout_Form" action="/logout" method="POST">
+		<input type="hidden" name="${ _csrf.parameterName }" value="${ _csrf.token }">
+	</form>
+
 	<br />

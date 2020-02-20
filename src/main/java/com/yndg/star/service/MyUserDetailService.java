@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.yndg.star.model.user.MyUserDetails;
 import com.yndg.star.model.user.User;
 import com.yndg.star.repository.UserRepository;
 
@@ -23,10 +24,10 @@ public class MyUserDetailService implements UserDetailsService {
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		user = userRepository.authentication(username);
+		MyUserDetails user = userRepository.authentication(username);
 	
 		if(user == null) {
-			throw new UsernameNotFoundException("유저네임을 찾을 수 없습니다.");
+			throw new UsernameNotFoundException(username);
 		}
 		
 		return user;

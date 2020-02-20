@@ -30,6 +30,7 @@ public class UserService{
 	public int findIdByUsername(String username) {
 		
 		int result = rep.findIdByUsername(username);
+		 
 		return result;
 	}
 

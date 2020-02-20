@@ -14,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.yndg.star.model.board.dto.ResCountDto;
 import com.yndg.star.model.board.dto.ResMyListDto;
 import com.yndg.star.model.board.dto.ResWriteListDto;
-import com.yndg.star.model.user.User;
+import com.yndg.star.model.user.MyUserDetails;
 import com.yndg.star.model.user.dto.ResUserInfoDto;
 import com.yndg.star.service.BoardService;
 import com.yndg.star.service.UserService;
@@ -31,7 +31,7 @@ public class BoardController {
 	
 	// 팔로우한 사람 게시물 불러오기 댓글x
 	@GetMapping("/board/myList")
-	public String myListBoard(Model model, @AuthenticationPrincipal User principal) {
+	public String myListBoard(Model model, @AuthenticationPrincipal MyUserDetails principal) {
 		List<ResMyListDto> board = boardservice.myListBoard(principal.getId());
 		model.addAttribute("board", board);
 		return "board/myList";
@@ -59,7 +59,7 @@ public class BoardController {
 		
 	}
 	
-	@GetMapping("/{username}")
+	@GetMapping("/user/{username}")
 	public String writeList(Model model, @PathVariable String username) {
 		
 		int id = userService.findIdByUsername(username);

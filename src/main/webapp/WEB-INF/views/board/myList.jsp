@@ -77,6 +77,13 @@
 	<script src="/js/lib/jquery-3.4.1.min.js"></script>
 	<script src="/js/lib/bootstrap.min.js"></script>
 	<script>
+	function logout(){
+		$('#logout_Form').submit();
+		alert('로그아웃되었습니다.');
+	}
+		
+
+	
 		$('#reple_btn').on('click', function(){
 
 			var res = '';

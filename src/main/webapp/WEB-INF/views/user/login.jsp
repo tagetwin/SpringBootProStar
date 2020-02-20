@@ -1,4 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+<sec:authorize access="isRememberMe()"> </sec:authorize>
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,6 +38,18 @@ ul li {
 					<form action="login" method="post">
 						<input name="username" type="text" class="form-control mb-2" placeholder="아이디" />
 						<input name="password" type="password" class="form-control mb-2" placeholder="비밀번호" />
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+						<input type="checkbox" id="remember-me" name="remember-me" />
+						 
+						<label>리멤버미</label>
+						
+						<c:if test="${not empty SPRING_SECURITY_LAST_EXCEPTION}">
+							<font color="red">
+								<p>
+									Your login attempt was not successful due to <br /> ${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}
+								</p> <c:remove var="SPRING_SECURITY_LAST_EXCEPTION" scope="session" />
+							</font>
+						</c:if>
 						<button type="submit" class="btn btn-primary btn-block mb-4">로그인</button>
 					</form>
 					
@@ -125,8 +140,8 @@ ul li {
 // 			$('#password_check').append('<small>'+check.password+'</small>');	
 // 		}
 
-	});
-})
+// 	});
+// })
 
 // 엔터키 치면 바로 로그인 되게	
 $("#password").keydown(function(key) {
