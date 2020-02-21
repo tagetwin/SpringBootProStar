@@ -1,6 +1,12 @@
 package com.yndg.star.config;
 
 
+import java.io.IOException;
+import java.util.Optional;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +25,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.authentication.RememberMeServices;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 import com.yndg.star.model.user.MyUserDetails;
@@ -48,7 +54,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			}
 			
 			@Override
-			@SuppressWarnings("unchecked")
 			public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 				
 				String username = (String) authentication.getPrincipal();
@@ -94,43 +99,69 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.formLogin()
 				.loginPage("/login")
 				.loginProcessingUrl("/login") // post 만 낚아챔
-				.failureUrl("/login")
-				.defaultSuccessUrl("/board/myList", true) // successHandler를 사용할 수 있음
-				
-				.and()
-				.rememberMe()
-				.rememberMeParameter("remember-me")
-				.key("uniqueAndSecret")
-				.tokenValiditySeconds(600);
-				
 //				.failureHandler(new AuthenticationFailureHandler() {
 //					
 //					@Override
 //					public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
 //							AuthenticationException exception) throws IOException, ServletException {
-//							String username = request.getParameter("username");
-//							System.out.println("username : " + username);
-//							System.out.println(exception.getMessage());
+//						String errormsgname = null;
+//						String errormsg = null;
+//						
+//						 if(exception instanceof BadCredentialsException) {
+//					            errormsg = MessageUtils.getMessage("error.BadCredentials");
+//					        } else if(exception instanceof InternalAuthenticationServiceException) {
+//					            errormsg = MessageUtils.getMessage("error.BadCredentials");
+//					        } else if(exception instanceof DisabledException) {
+//					            errormsg = MessageUtils.getMessage("error.Disaled");
+//					        } else if(exception instanceof CredentialsExpiredException) {
+//					            errormsg = MessageUtils.getMessage("error.CredentialsExpired");
+//					        }
+//						 	request.setAttribute(errormsgname, errormsg);
+//						 
+//					        request.getRequestDispatcher("/login").forward(request, response);
+//
+//						 
 //					}
 //				})
-//				.successHandler(new AuthenticationSuccessHandler() {
-//					
-//					@Override
-//					public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-//							Authentication authentication) throws IOException, ServletException {
-//								String username = request.getParameter("username");
-//								Cookie cookie = new Cookie("usernameCookie", username);
-//								response.addCookie(cookie);
-//								response.sendRedirect("/board/myList");
-//						
-//					}
-//				});
+				
+				.successHandler(new AuthenticationSuccessHandler() {
+					
+					@Override
+					public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+							Authentication authentication) throws IOException, ServletException {
+						
+						String username = request.getParameter("username");
+						String rememberMe = Optional.ofNullable(request.getParameter("rememberMe")).orElse("off");
+						System.out.println(rememberMe);		
+						System.out.println("usernameCookie" + username);
+						if(rememberMe.equals("on")) {
+							Cookie cookie = new Cookie("usernameCookie", username);
+							cookie.setMaxAge(60*60);
+							response.addCookie(cookie);
+							response.sendRedirect("/board/myList");
+						}else {
+							Cookie cookie = new Cookie("usernameCookie", "");
+							cookie.setMaxAge(0);
+							response.addCookie(cookie);
+							response.sendRedirect("/board/myList");
+						}
+						
+						
+					}
+				})
+//				.defaultSuccessUrl("/board/myList", true) // successHandler를 사용할 수 있음
+				
+				.and()
+				.rememberMe()
+				.rememberMeCookieName("login")
+				.rememberMeParameter("autoLogin");
+				
 		
 		
 		http.logout()
 			.logoutUrl("/logout")
 			.logoutSuccessUrl("/login")
-			.deleteCookies("JSESSIONID")
+			.deleteCookies("usernameCookie")
 			.invalidateHttpSession(true);
 		
 

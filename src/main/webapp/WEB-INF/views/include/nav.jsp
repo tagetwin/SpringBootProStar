@@ -5,7 +5,7 @@
 <sec:authorize access="isAuthenticated()">
     <sec:authentication property="principal" var="principal" />
 </sec:authorize>
-
+<sec:csrfMetaTags/>
 
 <!DOCTYPE html>
 <html>
@@ -34,7 +34,7 @@
 				<li class="nav-item"><a class="nav-link" href="/board/write"><i class="far fa-edit fa-2x"></i></a></li>
 				<li class="nav-item"><a class="nav-link" href="#"><i class="far fa-compass fa-2x"></i></a></li>
 				<li class="nav-item"><a class="nav-link" href="#"><i class="far fa-heart fa-2x"></i></a></li>
-				<li class="nav-item"><a class="nav-link" href="/${principal.username}"><i class="far fa-user fa-2x"></i></a></li>
+				<li class="nav-item"><a class="nav-link" href="/board/${principal.username}"><i class="far fa-user fa-2x"></i></a></li>
 				<li class="nav-item">
 				<a class="nav-link" href="javascript:void(0);" onclick="logout()"><i class="fas fa-sign-out-alt fa-2x"></i></a>
 				</li>

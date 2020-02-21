@@ -37,7 +37,7 @@ public class BoardService {
 	
 	// 글쓰기 사진업로드
 	@Transactional
-	public int write(int id, String content, MultipartFile fileName) {
+	public int writeBoard(int userId, String content, MultipartFile fileName) {
 
 		try {
 			UUID uuid = UUID.randomUUID();
@@ -46,7 +46,7 @@ public class BoardService {
 			Path filePath = Paths.get(fileRealPath+uuidFilename);
 			System.out.println(filePath);
 			
-			int result = rep.write(id, content, uuidFilename);
+			int result = rep.writeBoard(userId, content, uuidFilename);
 			
 			Files.write(filePath, fileName.getBytes());
 			if(result == 1) {
@@ -63,7 +63,7 @@ public class BoardService {
 		
 				
 	}
-	
+
 	// 내가 쓴 글 리스트 불러오기
 	@Transactional
 	public List<ResWriteListDto> writeList(int id) {

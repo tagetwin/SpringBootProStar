@@ -10,7 +10,7 @@
 				<form action="/board/write" method="post" enctype="multipart/form-data">
 					<div class="card-header d-flex justify-content-between">
 						<div>
-							<a href="#"><img class="otherProfile" src="/img/${principal.profile}" /></a>${principal.username}
+							<a href="#"><img class="otherProfile" src="/media/${principal.profile}" /></a>${principal.username}
 						</div>
 						<div>
 							<label class="btn btn-primary btn-file">이미지업로드<input type="file" name="fileName" style="display: none;" id="input_img">
@@ -26,7 +26,8 @@
 					<div class="card-footer d-flex">
 						<div class="input-group mb-3">
 							<input type="text" name="content" class="form-control" placeholder="글쓰기..." />
-							<input type="hidden" name="id" class="form-control" value="${principal.id}"/>
+							<input type="hidden" name="userId" class="form-control" value="${principal.id}"/>
+							<sec:csrfInput />
 							<div class="input-group-append">
 								<button class="btn btn-dark" type="submit">게시</button>
 							</div>	

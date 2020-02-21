@@ -29,26 +29,34 @@ ul li {
 }
 </style>
 </head>
-<body>
+<body onload="document.login.username.focus();">
 	<div class="container">
 		<div class="card mt-5">
 			<div class="card-body">
 				<div class="h1 card-title">Stargram</div>
 				<div class="form-group">
-					<form action="login" method="post">
-						<input name="username" type="text" class="form-control mb-2" placeholder="아이디" />
+					<form action="login" method="post" name="login">
+						<input name="username" type="text" class="form-control mb-2" placeholder="아이디" value="${username}"/>
 						<input name="password" type="password" class="form-control mb-2" placeholder="비밀번호" />
 						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-						<input type="checkbox" id="remember-me" name="remember-me" />
-						 
-						<label>리멤버미</label>
-						
+						<label class="form-check-label ml-3">
+							<c:choose>
+								<c:when test="${not empty username}">
+									<input class="form-check-input" type="checkbox" name="rememberMe" checked /> Remember me
+							</c:when>
+								<c:otherwise>
+									<input class="form-check-input" type="checkbox" name="rememberMe" /> Remember me
+							</c:otherwise>
+							</c:choose>
+
+						</label>
+						<input type="checkbox" id="autoLogin" name="autoLogin" /> <label class="form-check-label">자동로그인</label>
+
 						<c:if test="${not empty SPRING_SECURITY_LAST_EXCEPTION}">
-							<font color="red">
-								<p>
-									Your login attempt was not successful due to <br /> ${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}
-								</p> <c:remove var="SPRING_SECURITY_LAST_EXCEPTION" scope="session" />
-							</font>
+							<div class="p text-danger" >
+								${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}
+								<c:remove var="SPRING_SECURITY_LAST_EXCEPTION" scope="session" />
+							</div>
 						</c:if>
 						<button type="submit" class="btn btn-primary btn-block mb-4">로그인</button>
 					</form>

@@ -8,20 +8,19 @@
 		SELECT b.id, b.content, b.starCount, b.fileName, b.createDate, u.username
 		FROM board b LEFT JOIN user u
 		ON b.userid = u.id
-		WHERE u.id = (
+		WHERE u.id = any(
 		SELECT f.followId
-		FROM user u LEFT JOIN follow f
-		ON u.id = f.userId
-		WHERE u.id = #{id})
+		FROM follow f
+		WHERE f.userId = #{id})
 		ORDER BY b.id DESC
 	</select>
 
-	<insert id="write">
-		INSERT INTO board (content, fileName, userId) VALUES (#{content}, #{fileName}, #{id})
+	<insert id="writeBoard">
+		INSERT INTO board (content, fileName, userId) VALUES (#{content}, #{fileName}, #{userId})
 	</insert>
 
 	<select id="writeList" resultType="com.yndg.star.model.board.dto.ResWriteListDto">
-		SELECT * FROM board WHERE userId = #{id}
+		SELECT * FROM board WHERE userId = #{id} ORDER BY id DESC
 	</select>
 	
 	<select id="writeCount" resultType="int">

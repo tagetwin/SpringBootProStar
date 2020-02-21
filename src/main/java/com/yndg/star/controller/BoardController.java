@@ -46,20 +46,20 @@ public class BoardController {
 	
 	// 글쓰기 수행
 	@PostMapping("/board/write")
-	public String write(@RequestParam int id, @RequestParam String content, @RequestParam MultipartFile fileName) {
+	public String writeBoard(@RequestParam int userId, @RequestParam String content, @RequestParam MultipartFile fileName) {
 		
-		ResUserInfoDto dto =  userService.findUserById(id);
+		ResUserInfoDto dto =  userService.findUserById(userId);
 		String username = dto.getUsername();
-		int result = boardservice.write(id, content, fileName);
+		int result = boardservice.writeBoard(userId, content, fileName);
 		if(result == 1) {
-			return "redirect:/"+username;
+			return "redirect:/board/"+username;
 		}else {
 			return Script.back("글쓰기 실패");
 		}
 		
 	}
 	
-	@GetMapping("/user/{username}")
+	@GetMapping("/board/{username}")
 	public String writeList(Model model, @PathVariable String username) {
 		
 		int id = userService.findIdByUsername(username);

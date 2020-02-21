@@ -11,7 +11,7 @@ import com.yndg.star.model.board.dto.ResWriteListDto;
 public interface BoardRepository {
 
 	public List<ResMyListDto> myListBoard(int id);
-	public int write(int id, String content, String fileName);
+	public int writeBoard(int userId, String content, String fileName);
 	public List<ResWriteListDto> writeList(int id);
 	public int writeCount(int id);
 	public int followCount(int id);
