@@ -17,6 +17,7 @@ import com.yndg.star.model.board.dto.ResCountDto;
 import com.yndg.star.model.board.dto.ResMyListDto;
 import com.yndg.star.model.board.dto.ResWriteListDto;
 import com.yndg.star.repository.BoardRepository;
+import com.yndg.star.repository.CommentRepository;
 
 @Service
 public class BoardService {
@@ -27,11 +28,22 @@ public class BoardService {
 	@Autowired
 	private BoardRepository rep;
 	
+	@Autowired
+	private CommentRepository commentRepository;
+	
 	// 팔로우한사람 글불러오기
 	@Transactional
 	public List<ResMyListDto> myListBoard(int id) {
 		
 		List<ResMyListDto> board = rep.myListBoard(id);
+		
+		for(int i=0; i<board.size(); i++) {
+			ResMyListDto dto = board.get(i);
+			System.out.println("boardId?:"+dto.getId());
+			dto.setListComment(commentRepository.resListComment(dto.getId()));
+		}
+		
+		
 		return board;
 	}
 	

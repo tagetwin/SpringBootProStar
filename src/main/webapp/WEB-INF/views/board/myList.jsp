@@ -3,16 +3,15 @@
 	<%@ include file="../include/nav.jsp"%>
 	<div class="container">
 	
-		<div class="row">
-<%-- 		<c:if test=""></c:if> --%>
+		<div class="row" style="margin-top: 75px">
 		<c:forEach items="${board}" var="board">
-			<div class="col-md-8 mb-5">
+			<div class="col-md-8 col-sm-12 col-12 mb-5">
 				<div class="card">
 					<div class="card-header">
 						<a href="#"><img class="otherProfile" src="/img/star.png" /></a><a href="/${board.username}">${board.username}</a>
 					</div>
 					<div class="card-body">
-						<img src="/media/${board.fileName}"  width="100%"/>
+						<img src="/media/${board.fileName}"  width="100%" />
 					</div>
 					<div class="card-footer d-flex">
 						<div class="">
@@ -39,10 +38,12 @@
 							</tr>
 						</table>
 						<table border="1" id="reple${board.id}">
+						<c:forEach items="${board.listComment}" var="comment">
 							<tr>
-								<td class="my_td"><a>{comment.username}</a></td>
-								<td>{comment.content}</td>
+								<td class="my_td"><a>${comment.username}</a></td>
+								<td>${comment.content}</td>
 							</tr>
+						</c:forEach>
 						</table>
 					</div>
 					<div class="card-footer d-flex">
@@ -84,9 +85,6 @@
 		$('#logout_Form').submit();
 		alert('로그아웃되었습니다.');
 	}
-$('button').on('click', function(){
-	alert(($(this).attr('value')));
-})
 
 	$('button').on('click', function(e){
 

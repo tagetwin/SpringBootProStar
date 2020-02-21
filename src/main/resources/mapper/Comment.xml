@@ -15,4 +15,11 @@
 		WHERE c.id = #{id}
 	</select>
 
+	<select id="resListComment" resultType="com.yndg.star.model.comment.dto.ResListCommentDto">
+		SELECT c.id, c.content, u.username, c.boardId, c.createDate
+		FROM comment c LEFT JOIN user u
+		ON c.userId=u.id
+		WHERE boardId=#{id}
+		ORDER BY c.id DESC
+	</select>
 </mapper>

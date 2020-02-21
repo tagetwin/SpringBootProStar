@@ -39,7 +39,7 @@
 			<c:when test="${principal.username eq user.username}">
 				<div class="text-center mt-5"><i class="fas fa-edit fa-4x"></i></div>
 				<div class="h3 text-center mt-3">게시물을 작성해주세요</div>
-				<div class="text-center"><a href="board/write" class="btn btn-info">작성하기</a></div>
+				<div class="text-center"><a href="write" class="btn btn-info">작성하기</a></div>
 			</c:when>
 			<c:otherwise>
 				<div class="h3 text-center mt-3">게시물이 없습니다.</div>

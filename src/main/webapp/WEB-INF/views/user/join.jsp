@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,6 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <!-- 부트스트랩 css -->
 <link rel="stylesheet" href="/css/lib/bootstrap.min.css" />
+<sec:csrfMetaTags/>
 <style>
 .agreement:link {
 	color: gray;
@@ -110,6 +111,7 @@ ul li {
 	<!-- 부트스트랩 js, jquery 추가 -->
 <script src="/js/lib/jquery-3.4.1.min.js"></script>
 <script src="/js/lib/bootstrap.min.js"></script>
+<script src="/js/all.js"></script>
 <script>
 /**
  * 회원가입로직

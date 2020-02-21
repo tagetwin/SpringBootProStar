@@ -12,4 +12,5 @@ public class ResWriteListDto {
 	private String content;
 	private int starCount;
 	private Date createDate;
+	
 }

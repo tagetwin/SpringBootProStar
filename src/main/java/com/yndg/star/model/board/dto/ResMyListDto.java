@@ -1,6 +1,9 @@
 package com.yndg.star.model.board.dto;
 
 import java.util.Date;
+import java.util.List;
+
+import com.yndg.star.model.comment.dto.ResListCommentDto;
 
 import lombok.Data;
 
@@ -13,6 +16,6 @@ public class ResMyListDto {
 	private int starCount;
 	private Date createDate;
 	private String username;
-	
+	private List<ResListCommentDto> listComment;
 	
 }
