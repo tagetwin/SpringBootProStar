@@ -9,6 +9,7 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,34 +17,42 @@ import org.springframework.web.multipart.MultipartFile;
 import com.yndg.star.model.board.dto.ResCountDto;
 import com.yndg.star.model.board.dto.ResMyListDto;
 import com.yndg.star.model.board.dto.ResWriteListDto;
+import com.yndg.star.model.user.MyUserDetails;
 import com.yndg.star.repository.BoardRepository;
 import com.yndg.star.repository.CommentRepository;
+import com.yndg.star.repository.FollowRepository;
+import com.yndg.star.repository.StarRepository;
 
 @Service
 public class BoardService {
 
 	@Value("${file.path}")
 	private String fileRealPath; // 서버에 배포하면 경로 변경해야함.
-	
+
 	@Autowired
 	private BoardRepository rep;
 	
 	@Autowired
 	private CommentRepository commentRepository;
 	
+	@Autowired
+	private FollowRepository followRepository;
+	
+	@Autowired
+	private StarRepository starRepository;
+	
 	// 팔로우한사람 글불러오기
 	@Transactional
 	public List<ResMyListDto> myListBoard(int id) {
 		
 		List<ResMyListDto> board = rep.myListBoard(id);
-		
-		for(int i=0; i<board.size(); i++) {
-			ResMyListDto dto = board.get(i);
-			System.out.println("boardId?:"+dto.getId());
+
+		for (ResMyListDto dto : board) {
+//			System.out.println("boardId?:" + dto.getId());
 			dto.setListComment(commentRepository.resListComment(dto.getId()));
+			dto.setStar(starRepository.selectStar(id, dto.getId()));
+//			System.out.println("스타여부 : "+dto.getStar());
 		}
-		
-		
 		return board;
 	}
 	
@@ -68,12 +77,9 @@ public class BoardService {
 			}
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			throw new RuntimeException();
 		}
-		
-				
 	}
 
 	// 내가 쓴 글 리스트 불러오기
@@ -91,12 +97,50 @@ public class BoardService {
 		try {
 			ResCountDto dto = new ResCountDto();
 			dto.setWriteCount(rep.writeCount(id));
-			dto.setFollowCount(rep.followCount(id));
-			dto.setFollowerCount(rep.followerCount(id));
+			dto.setFollowCount(followRepository.followCount(id));
+			dto.setFollowerCount(followRepository.followerCount(id));
 			return dto;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException();
 		}
 	}
+	
+	// 스타 더하기
+	@Transactional
+	public int plusStarCount(int id) {
+		
+		MyUserDetails principal = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		int selectResult = starRepository.selectStar(principal.getId(), id);
+		if(selectResult != 1) {
+			int plusResult = rep.plusStarCount(id);
+			int insertRestult = starRepository.insertStar(principal.getId(), id);
+			if(plusResult == 1 && insertRestult == 1) {
+				return 1;
+			}
+		}else {
+			return -1;
+		}
+		return -1;
+	}
+	
+	// 스타 빼기
+		@Transactional
+		public int minusStarCount(int id) {
+			
+			MyUserDetails principal = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			
+			int selectResult = starRepository.selectStar(principal.getId(), id);
+			if(selectResult == 1) {
+				int minusResult = rep.minusStarCount(id);
+				int deleteRestult = starRepository.deleteStar(principal.getId(), id);
+				if(minusResult == 1 && deleteRestult == 1) {
+					return 1;
+				}
+			}else {
+				return -1;
+			}
+			return -1;
+		}
 }

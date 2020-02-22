@@ -27,13 +27,13 @@
 		SELECT COUNT(*) FROM board WHERE userId = #{id}
 	</select>
 	
-	<select id="followCount" resultType="int">
-		SELECT COUNT(*) FROM follow WHERE userId = #{id}
-	</select>
+	<update id="plusStarCount">
+		UPDATE board SET starCount = (starCount+1) WHERE id = #{id}
+	</update>
 	
-	<select id="followerCount" resultType="int">
-		SELECT COUNT(*) FROM follow WHERE followId = #{id}
-	</select>
+	<update id="minusStarCount">
+		UPDATE board SET starCount = (starCount-1) WHERE id = #{id}
+	</update>
 	
-
+	
 </mapper>

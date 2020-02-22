@@ -14,6 +14,6 @@ public interface BoardRepository {
 	public int writeBoard(int userId, String content, String fileName);
 	public List<ResWriteListDto> writeList(int id);
 	public int writeCount(int id);
-	public int followCount(int id);
-	public int followerCount(int id);
+	public int plusStarCount(int id);
+	public int minusStarCount(int id);
 }

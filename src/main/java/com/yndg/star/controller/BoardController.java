@@ -2,18 +2,24 @@ package com.yndg.star.controller;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.yndg.star.model.RespCM;
 import com.yndg.star.model.board.dto.ResCountDto;
 import com.yndg.star.model.board.dto.ResMyListDto;
 import com.yndg.star.model.board.dto.ResWriteListDto;
+import com.yndg.star.model.star.dto.PlustStarCountDto;
 import com.yndg.star.model.user.MyUserDetails;
 import com.yndg.star.model.user.dto.ResUserInfoDto;
 import com.yndg.star.service.BoardService;
@@ -59,6 +65,7 @@ public class BoardController {
 		
 	}
 	
+	// 자신이 쓴 글 리스트로
 	@GetMapping("/board/{username}")
 	public String writeList(Model model, @PathVariable String username) {
 		
@@ -73,5 +80,29 @@ public class BoardController {
 		ResCountDto countDto = boardservice.countList(id);
 		model.addAttribute("countList", countDto);
 		return "board/writeList";
+	}
+	
+	@PutMapping("/plusStar")
+	public ResponseEntity<?> plusStarCount(@RequestBody PlustStarCountDto dto){
+		
+		int result = boardservice.plusStarCount(dto.getBoardId());
+		
+		if(result == 1) {
+			return new ResponseEntity<RespCM>(new RespCM(200, "ok"), HttpStatus.OK);
+		}else {
+			return new ResponseEntity<RespCM>(new RespCM(400, "fail"), HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@PutMapping("/minusStar")
+	public ResponseEntity<?> minusStarCount(@RequestBody PlustStarCountDto dto){
+		
+		int result = boardservice.minusStarCount(dto.getBoardId());
+		
+		if(result == 1) {
+			return new ResponseEntity<RespCM>(new RespCM(200, "ok"), HttpStatus.OK);
+		}else {
+			return new ResponseEntity<RespCM>(new RespCM(400, "fail"), HttpStatus.BAD_REQUEST);
+		}
 	}
 }

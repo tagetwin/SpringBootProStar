@@ -17,5 +17,6 @@ public class ResMyListDto {
 	private Date createDate;
 	private String username;
 	private List<ResListCommentDto> listComment;
+	private int star;
 	
 }

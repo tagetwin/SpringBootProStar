@@ -22,8 +22,7 @@ public class CommentService {
 		int result = rep.writeComment(dto);
 		
 		if(result == 1) {
-			ResCommentDto comment = rep.resComment(dto.getId());
-			return comment;
+			return rep.resComment(dto.getId());
 		}
 		return null;
 	}
