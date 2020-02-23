@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
 
+import com.yndg.star.model.board.dto.ResFindOneDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -50,7 +51,7 @@ public class BoardService {
 		for (ResMyListDto dto : board) {
 //			System.out.println("boardId?:" + dto.getId());
 			dto.setListComment(commentRepository.resListComment(dto.getId()));
-			dto.setStar(starRepository.selectStar(id, dto.getId()));
+			dto.setStar(starRepository.findStar(id, dto.getId()));
 //			System.out.println("스타여부 : "+dto.getStar());
 		}
 		return board;
@@ -112,7 +113,7 @@ public class BoardService {
 		
 		MyUserDetails principal = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		
-		int selectResult = starRepository.selectStar(principal.getId(), id);
+		int selectResult = starRepository.findStar(principal.getId(), id);
 		if(selectResult != 1) {
 			int plusResult = rep.plusStarCount(id);
 			int insertRestult = starRepository.insertStar(principal.getId(), id);
@@ -126,21 +127,27 @@ public class BoardService {
 	}
 	
 	// 스타 빼기
-		@Transactional
-		public int minusStarCount(int id) {
-			
-			MyUserDetails principal = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			
-			int selectResult = starRepository.selectStar(principal.getId(), id);
-			if(selectResult == 1) {
-				int minusResult = rep.minusStarCount(id);
-				int deleteRestult = starRepository.deleteStar(principal.getId(), id);
-				if(minusResult == 1 && deleteRestult == 1) {
-					return 1;
-				}
-			}else {
-				return -1;
+	@Transactional
+	public int minusStarCount(int id) {
+
+		MyUserDetails principal = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+		int selectResult = starRepository.findStar(principal.getId(), id);
+		if(selectResult == 1) {
+			int minusResult = rep.minusStarCount(id);
+			int deleteRestult = starRepository.deleteStar(principal.getId(), id);
+			if(minusResult == 1 && deleteRestult == 1) {
+				return 1;
 			}
+		}else {
 			return -1;
 		}
+		return -1;
+	}
+
+	// 글 한개 불러오기 
+	@Transactional
+	public ResFindOneDto findOne(int id){
+		return rep.findOne(id);
+	}
 }

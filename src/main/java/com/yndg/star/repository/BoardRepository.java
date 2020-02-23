@@ -2,6 +2,7 @@ package com.yndg.star.repository;
 
 import java.util.List;
 
+import com.yndg.star.model.board.dto.ResFindOneDto;
 import org.springframework.stereotype.Repository;
 
 import com.yndg.star.model.board.dto.ResMyListDto;
@@ -16,4 +17,5 @@ public interface BoardRepository {
 	public int writeCount(int id);
 	public int plusStarCount(int id);
 	public int minusStarCount(int id);
+	public ResFindOneDto findOne(int id);
 }

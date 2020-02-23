@@ -4,7 +4,7 @@
 
 
     <div class="container">
-      <div class="row">
+      <div class="row" style="margin-top: 75px">
         <div class="col-md-3 mt-5">
           <img id="writeListImg" src="/media/${user.profile}" alt="" />
         </div>

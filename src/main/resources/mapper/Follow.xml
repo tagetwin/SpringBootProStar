@@ -12,4 +12,21 @@
 		SELECT COUNT(*) FROM follow WHERE followId = #{id}
 	</select>
 	
+	<insert id="follow">
+		INSERT INTO follow (userId, followId) VALUES (#{userId}, #{followId}) 
+	</insert>
+	
+	<delete id="unfollow">
+		DELETE FROM follow WHERE userid = #{userId} AND followId = #{followId} 
+	</delete>
+	
+	<select id="findFollower">
+		SELECT u.id, u.username
+		FROM user u LEFT JOIN follow f
+		ON f.followId = u.id
+		WHERE f.userId = {id}
+	</select>
+
+
+
 </mapper>

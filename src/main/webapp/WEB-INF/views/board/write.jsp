@@ -4,7 +4,7 @@
 
 
 <div class="container">
-	<div class="row">
+	<div class="row" style="margin-top: 75px">
 		<div class="col-md-8">
 			<div class="card">
 				<form action="/board/write" method="post" enctype="multipart/form-data">

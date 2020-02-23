@@ -4,7 +4,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface StarRepository {
-	public int selectStar(int userId, int boardId);
+	public int findStar(int userId, int boardId);
 	public int insertStar(int userId, int boardId);
 	public int deleteStar(int userId, int boardId);
 }

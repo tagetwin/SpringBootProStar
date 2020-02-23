@@ -1,6 +1,5 @@
 package com.yndg.star.model.follow;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;

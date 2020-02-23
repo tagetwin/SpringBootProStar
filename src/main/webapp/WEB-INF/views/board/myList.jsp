@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 	<%@ include file="../include/nav.jsp"%>
@@ -22,19 +23,17 @@
 						<div class="star">
 						<c:choose>
 							<c:when test="${board.star eq 1}">
-								<i class="fas fa-star fa-2x" id="${board.id}" >${board.star}</i>
-								<input type="text" id="star${board.id}" value="${board.star}"/>
-							</c:when> 
+								<i class="fas fa-star fa-2x" id="${board.id}" ></i>
+								<input type="hidden" id="star${board.id}" value="${board.star}"/>
+							</c:when>
 							<c:otherwise>
-								<i class="far fa-star fa-2x" id="${board.id}" >${board.star}</i>
-								<input type="text" id="star${board.id}" value="${board.star}"/>
+								<i class="far fa-star fa-2x" id="${board.id}" ></i>
+								<input type="hidden" id="star${board.id}" value="${board.star}"/>
 							</c:otherwise>
 						</c:choose>
-<%-- 							<i class="far fa-star fa-2x" id="star${board.id}" >${board.star}</i> --%>
-<%-- 							<input type="hidden" id="star${board.id}" value="${board.star}"/> --%>
 						</div>
 						<div class="ml-4">
-							<a><i class="far fa-comment fa-2x"></i></a>
+							<a href="/board/detail/${board.id}"><i class="far fa-comment fa-2x"></i></a>
 						</div>
 						<div class="ml-4">
 							<a><i class="far fa-share-square fa-2x"></i></a>
@@ -45,11 +44,11 @@
 					</div>
 					<div class="card-body">
 						<p>
-							<a>${board.starCount}명</a>이 좋아합니다.
+							<a id="starCount${board.id}">${board.starCount}</a>명이 좋아합니다.
 						</p>
 						<table border="1">
 							<tr>
-								<td class='my_td'><a href="/${board.username}">${board.username}</a></td>
+								<td class='my_td'><a href="/board/${board.username}">${board.username}</a></td>
 								<td>${board.content}</td>
 							</tr>
 						</table>
@@ -114,9 +113,14 @@
         let starNo = '#star'+boardId;
         
      	let star = $(starNo).val();
-     	alert(star);
+//      	alert(star);
+     	star = Number(star);
+
+		
      	
-        if(star == 0){
+     	let starCount = $('#starCount'+boardId).text();
+     	starCount = Number(starCount);
+        if(star === 0){
 
 			let data={
 				boardId : boardId,
@@ -133,9 +137,11 @@
 			}).done(function(r){
 				if(r.statusCode === 200){
 					console.log(r);
-					  $('#'+boardId).addClass('fas fa-star fa-2x');
-			            star++;
-					alert('별추가 성공');
+					  $('#'+boardId).addClass('fas');
+			          $(starNo).val(1);
+			          var c= starCount+1;
+					  $('#starCount'+boardId).text(c);
+// 					alert('별추가 성공');
 				}
 
 			}).fail(function(){
@@ -159,10 +165,12 @@
 			}).done(function(r){
 				if(r.statusCode === 200){
 					console.log(r);
-					alert('별제거 성공');
+// 					alert('별제거 성공');
 		            $('#'+boardId).removeClass('fas');
 		            $('#'+boardId).addClass('far');
-		            star--;
+		            $(starNo).val(0);
+		            var c= starCount-1;
+					$('#starCount'+boardId).text(c);
 				}
 
 			}).fail(function(){
