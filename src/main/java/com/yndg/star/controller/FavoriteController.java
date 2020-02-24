@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yndg.star.model.RespCM;
 import com.yndg.star.model.favorite.dto.ResFavoriteDto;
@@ -52,8 +53,8 @@ public class FavoriteController {
 		}
 	}
 	
-	@PostMapping("/favorite")
-	public List<ResFavoriteDto> find(@AuthenticationPrincipal MyUserDetails principal){
+	@GetMapping("/favorite")
+	public @ResponseBody List<ResFavoriteDto> find(@AuthenticationPrincipal MyUserDetails principal){
 		
 		return service.findFavoriteById(principal.getId());
 	}

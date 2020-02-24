@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.yndg.star.model.RespCM;
@@ -41,7 +42,7 @@ public class BoardController {
 	private CommentService commentService;
 	private FavoriteService favoriteService;
 
-	// 팔로우한 사람 게시물 불러오기 댓글x
+	// 팔로우한 사람 게시물 불러오기
 	@GetMapping("/board/myList")
 	public String myListBoard(Model model, @AuthenticationPrincipal MyUserDetails principal) {
 		List<ResMyListDto> board = boardservice.myListBoard(principal.getId());
@@ -60,7 +61,7 @@ public class BoardController {
 	@PostMapping("/board/write")
 	public String writeBoard(@RequestParam int userId, @RequestParam String content,
 			@RequestParam MultipartFile fileName) {
-
+		
 		ResUserInfoDto dto = userService.findUserById(userId);
 		String username = dto.getUsername();
 		int result = boardservice.writeBoard(userId, content, fileName);
@@ -76,7 +77,7 @@ public class BoardController {
 	@GetMapping("/board/{username}")
 	public String writeList(Model model, @PathVariable String username) {
 
-		int id = userService.findIdByUsername(username);
+		int id = (Integer)userService.findIdByUsername(username);
 
 		List<ResWriteListDto> dto = boardservice.writeList(id);
 		model.addAttribute("board", dto);
@@ -118,16 +119,19 @@ public class BoardController {
 	// 디테일 페이지로
 	@GetMapping("/board/detail/{id}")
 	public String detail(@PathVariable int id ,Model model, @AuthenticationPrincipal MyUserDetails principal) {
+
 		int userId = principal.getId();
-		
 		model.addAttribute("board", boardservice.findOne(id));
-				
 		model.addAttribute("star", starService.findStar(userId, id));
-		
 		model.addAttribute("comment", commentService.resListComment(id));
-		
 		model.addAttribute("favorite", favoriteService.find(userId, id));
-		
 		return "board/detail";
 	}
+	
+	@GetMapping("/writeList")
+	public @ResponseBody List<ResWriteListDto> writeList(@AuthenticationPrincipal MyUserDetails principal){
+		
+		return boardservice.writeList(principal.getId());
+	}
+	
 }

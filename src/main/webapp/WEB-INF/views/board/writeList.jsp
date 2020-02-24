@@ -27,7 +27,7 @@
       </div>
       <hr />
       <div class="d-flex justify-content-center mb-2">
-        <div class="mr-5"><button class="btn">게시물</button></div>
+        <div class="mr-5"><button class="btn" id="writeList_btn">게시물</button></div>
         <div class="mr-5"><button class="btn">IGTV</button></div>
         <div class="mr-5"><button class="btn" id="favorite_btn">저장됨</button></div>
         <div><button class="btn">태그됨</button></div>
@@ -49,16 +49,9 @@
 	</div>
       <div class="row wait">
       <c:forEach var="board" items="${board}">
-        <div class="col-md-4 mb-5" style="overflow: hidden; display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 300px;
-            height: 300px;
-            ">
+        <div class="col-md-4 mb-5 album" >
           <a href="/board/detail/${board.id}">
-            <img
-              src="/media/${board.fileName}"
-              alt=""/>
+            <img src="/media/${board.fileName}" alt="이미지가 없습니다."/>
           </a>
         </div>
         </c:forEach>
@@ -70,28 +63,45 @@
     <script src="/js/lib/bootstrap.min.js"></script>
     <script src="/js/all.js"></script>
     <script>
-	$('#favorite_btn').on('click', function(){
+	$('.album').on('mouseover', function(){
+		})
+    $('#writeList_btn').on('click', function(){
 		$('.wait').empty();
-		
 		$.ajax({
-
-			type : 'POST',
-			url : '/favorite',
-// 			data : JSON.stringify(data),
-// 			contentType : 'application/json; charset=utf-8',
-// 			dataType : 'json'
+			type : 'GET',
+			url : '/writeList',
 		}).done(function(r){
-			if(r.statusCode === 200){
-				console.log(r);
-
-				alert('북마크불러오기 성공');
+			for(key in r){
+			var res = '';
+			res += "<div class='col-md-4 mb-5 album'>";
+			res += "<a href=/board/detail/"+r[key].id+">";
+	        res += "<img src=/media/"+r[key].fileName+"/></a></div>";
+	        $('.wait').append(res);
 			}
-
 		}).fail(function(){
 			alert('북마크불러오기 실패');
 		});
 		
 	})
+	$('#favorite_btn').on('click', function(){
+		$('.wait').empty();
+		$.ajax({
+			type : 'GET',
+			url : '/favorite',
+		}).done(function(r){
+			for(key in r){
+			var res = '';
+			res += "<div class='col-md-4 mb-5 album'>";
+			res += "<a href=/board/detail/"+r[key].id+">";
+	        res += "<img src=/media/"+r[key].fileName+"/></a></div>";
+	        $('.wait').prepend(res);
+			}
+		}).fail(function(){
+			alert('북마크불러오기 실패');
+		});
+		
+	});
+	
     </script>
   </body>
 </html>

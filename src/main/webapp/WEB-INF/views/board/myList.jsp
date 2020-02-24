@@ -45,12 +45,12 @@
 								<c:when test="${board.favorite eq 1}">
 									<a href="/favorite/${board.id}"><i class="fas fa-bookmark fa-2x"></i></a>
 									<input type="hidden" class="id" value="${board.id}" />
-									<input type="text" id="favorite${board.id}" value="${board.favorite}" />
+									<input type="hidden" id="favorite${board.id}" value="${board.favorite}" />
 								</c:when>
 								<c:otherwise>
 									<a href="/favorite/${board.id}"><i class="far fa-bookmark fa-2x"></i></a>
 									<input type="hidden" class="id" value="${board.id}" />
-									<input type="text" id="favorite${board.id}" value="${board.favorite}" />
+									<input type="hidden" id="favorite${board.id}" value="${board.favorite}" />
 								</c:otherwise>
 							</c:choose>
 						</div>
@@ -132,7 +132,7 @@
 		e.preventDefault();
 		let a = $(this).children();
 		let href = a.attr('href');
-		alert(href);
+// 		alert(href);
 		let i = a.children();
 		let status = i.attr('class');
 // 		alert(status);
@@ -142,11 +142,11 @@
 		i.addClass('fas');
 
 		let boardId= $(this).children('input').val();
-		console.log(boardId);
+// 		console.log(boardId);
 
 		let favoriteNo = '#favorite'+boardId;
 		let favorite= $(favoriteNo).val();
-		alert(favorite);
+// 		alert(favorite);
 
 		if(favorite == 0){
 			$.ajax({
@@ -158,13 +158,13 @@
 				dataType : 'json'
 			}).done(function(r){
 				if(r.statusCode === 200){
-					console.log(r);
+// 					console.log(r);
 					i.removeClass('far');
 				  	i.addClass('fas');
 
 		        	$('#favorite'+boardId).val(1);
 
-		        	alert('북마크추가 성공');
+// 		        	alert('북마크추가 성공');
 
 				}
 
@@ -181,13 +181,13 @@
 				dataType : 'json'
 			}).done(function(r){
 				if(r.statusCode === 200){
-					console.log(r);
+// 					console.log(r);
 					i.removeClass('fas');
 				  	i.addClass('far');
 
 		        	$('#favorite'+boardId).val(0);
 
-		        	alert('북마크제거 성공');
+// 		        	alert('북마크제거 성공');
 				}
 
 			}).fail(function(){

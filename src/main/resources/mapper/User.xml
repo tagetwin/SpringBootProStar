@@ -13,8 +13,8 @@
 		SELECT * FROM user WHERE username = #{username}
 	</select>
 
-	<select id="findIdByUsername" resultType="int">
-		SELECT id FROM user WHERE username = #{username}
+	<select id="findIdByUsername" resultType="Integer">
+		SELECT ID FROM user WHERE username = #{username}
 	</select>
 	
 	<select id="findUserById" resultType="com.yndg.star.model.user.dto.ResUserInfoDto">

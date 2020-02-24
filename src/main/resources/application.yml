@@ -29,5 +29,5 @@ logging:
               BasicBinder: TRACE
 
 file:
-  path: C:/src/spring/SpringBootProStar/media/
+  path: C:/src/SpringBootProStar/media/
 

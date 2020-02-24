@@ -7,13 +7,13 @@
 	<div class="row" style="margin-top: 75px">
 		<div class="col-md-8">
 			<div class="card">
-				<form action="/board/write" method="post" enctype="multipart/form-data">
+				<form action="/board/write" method="post" enctype="multipart/form-data" id="write">
 					<div class="card-header d-flex justify-content-between">
 						<div>
 							<a href="#"><img class="otherProfile" src="/media/${principal.profile}" /></a>${principal.username}
 						</div>
 						<div>
-							<label class="btn btn-primary btn-file">이미지업로드<input type="file" name="fileName" style="display: none;" id="input_img">
+							<label class="btn btn-primary btn-file">이미지업로드<input type="file" name="fileName" style="display: none;" id="input_img"  onchange="checkFile(this)"/>
 							</label>
 						</div>
 					</div>
@@ -77,6 +77,22 @@
 			}
 			reader.readAsDataURL(f);
 		});
+	}
+
+	function checkFile(e){
+		let file = e.files;
+		if(file[0].size > 1024*1024*1){
+			alert('1MB 이하의 사진만 업로드 할 수 있습니다.\n\n' + '현재파일 용량 : ' + (Math.round(file[0].size / 1024 / 1024 * 100) / 100) + 'MB');
+// 			e.outerHTML = e.outerHTML;
+		}
+		// 체크를 통과했다면 종료.
+		else return;
+		// 체크에 걸리면 선택된 내용 취소 처리를 해야함.
+		// 파일선택 폼의 내용은 스크립트로 컨트롤 할 수 없습니다.
+		// 그래서 그냥 새로 폼을 새로 써주는 방식으로 초기화 합니다.
+		// 이렇게 하면 간단 !?
+		$('#write')[0].reset();
+		
 	}
 </script>
 </body>
