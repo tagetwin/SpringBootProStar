@@ -5,7 +5,7 @@
 <mapper namespace="com.yndg.star.repository.BoardRepository">
 	
 	<select id="myListBoard" resultType="com.yndg.star.model.board.dto.ResMyListDto">
-		SELECT b.id, b.content, b.starCount, b.fileName, b.createDate, u.username
+		SELECT b.id, b.content, b.starCount, b.fileName, b.createDate, u.username, u.profile
 		FROM board b LEFT JOIN user u
 		ON b.userid = u.id
 		WHERE u.id = any(
@@ -36,7 +36,7 @@
 	</update>
 
 	<select id="findOne" resultType="com.yndg.star.model.board.dto.ResFindOneDto">
-		SELECT b.id, u.username, b.fileName, b.starCount, b.content
+		SELECT b.id, u.username, b.fileName, b.starCount, b.content, u.profile
 		FROM board b LEFT JOIN user u
 		ON b.userId=u.id
 		WHERE b.id = #{id}

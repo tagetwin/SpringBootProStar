@@ -7,23 +7,24 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.yndg.star.model.RespCM;
 import com.yndg.star.model.board.dto.ResCountDto;
-import com.yndg.star.model.board.dto.ResFindOneDto;
 import com.yndg.star.model.board.dto.ResMyListDto;
 import com.yndg.star.model.board.dto.ResWriteListDto;
 import com.yndg.star.model.star.dto.StarCountDto;
 import com.yndg.star.model.user.MyUserDetails;
 import com.yndg.star.model.user.dto.ResUserInfoDto;
 import com.yndg.star.service.BoardService;
+import com.yndg.star.service.CommentService;
+import com.yndg.star.service.FavoriteService;
 import com.yndg.star.service.StarService;
 import com.yndg.star.service.UserService;
 import com.yndg.star.util.Script;
@@ -37,6 +38,8 @@ public class BoardController {
 	private BoardService boardservice;
 	private UserService userService;
 	private StarService starService;
+	private CommentService commentService;
+	private FavoriteService favoriteService;
 
 	// 팔로우한 사람 게시물 불러오기 댓글x
 	@GetMapping("/board/myList")
@@ -87,7 +90,7 @@ public class BoardController {
 	}
 
 	// 스타 더하기
-	@PutMapping("/plusStar")
+	@PostMapping("/star")
 	public ResponseEntity<?> plusStarCount(@RequestBody StarCountDto dto) {
 
 		int result = boardservice.plusStarCount(dto.getBoardId());
@@ -100,7 +103,7 @@ public class BoardController {
 	}
 
 	// 스타 빼기
-	@PutMapping("/minusStar")
+	@DeleteMapping("/star")
 	public ResponseEntity<?> minusStarCount(@RequestBody StarCountDto dto){
 		
 		int result = boardservice.minusStarCount(dto.getBoardId());
@@ -115,12 +118,15 @@ public class BoardController {
 	// 디테일 페이지로
 	@GetMapping("/board/detail/{id}")
 	public String detail(@PathVariable int id ,Model model, @AuthenticationPrincipal MyUserDetails principal) {
-		ResFindOneDto dto = boardservice.findOne(id);
-		model.addAttribute("board", dto);
-		
 		int userId = principal.getId();
-		int result = starService.findStar(userId, id); 
-		model.addAttribute("star", result);
+		
+		model.addAttribute("board", boardservice.findOne(id));
+				
+		model.addAttribute("star", starService.findStar(userId, id));
+		
+		model.addAttribute("comment", commentService.resListComment(id));
+		
+		model.addAttribute("favorite", favoriteService.find(userId, id));
 		
 		return "board/detail";
 	}

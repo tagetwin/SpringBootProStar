@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yndg.star.repository.FavoriteRepository">
+
+	<insert id="insert">
+		INSERT INTO favorite(userId, boardId) VALUES(#{userId}, #{boardId})
+	</insert>
+
+	<select id="find" resultType="int">
+		SELECT COUNT(*) FROM favorite WHERE userId = #{userId} and boardId = #{boardId}
+	</select>
+	
+	<delete id="delete">
+		DELETE FROM favorite WHERE userId =  #{userId} AND boardId =  #{boardId}
+	</delete>
+	
+	<select id="findFavoriteById" resultType="com.yndg.star.model.favorite.dto.ResFavoriteDto">
+		SELECT *
+		FROM board
+		WHERE id = ANY(
+		SELECT boardId
+		FROM favorite
+		WHERE userId = #{id})
+	</select>
+	
+	
+</mapper>

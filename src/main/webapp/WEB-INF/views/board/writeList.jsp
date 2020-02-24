@@ -29,7 +29,7 @@
       <div class="d-flex justify-content-center mb-2">
         <div class="mr-5"><button class="btn">게시물</button></div>
         <div class="mr-5"><button class="btn">IGTV</button></div>
-        <div class="mr-5"><button class="btn">저장됨</button></div>
+        <div class="mr-5"><button class="btn" id="favorite_btn">저장됨</button></div>
         <div><button class="btn">태그됨</button></div>
       </div>
     
@@ -47,15 +47,18 @@
 		</c:choose>
 	</c:if>
 	</div>
-      <div class="row">
+      <div class="row wait">
       <c:forEach var="board" items="${board}">
-        <div class="col-md-4 mb-5">
+        <div class="col-md-4 mb-5" style="overflow: hidden; display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 300px;
+            height: 300px;
+            ">
           <a href="/board/detail/${board.id}">
             <img
               src="/media/${board.fileName}"
-              alt=""
-              style="max-width: 200px; max-height: 200px;"
-            />
+              alt=""/>
           </a>
         </div>
         </c:forEach>
@@ -65,6 +68,31 @@
     <!-- 부트스트랩 js, jquery 추가 -->
     <script src="/js/lib/jquery-3.4.1.min.js"></script>
     <script src="/js/lib/bootstrap.min.js"></script>
+    <script src="/js/all.js"></script>
+    <script>
+	$('#favorite_btn').on('click', function(){
+		$('.wait').empty();
+		
+		$.ajax({
+
+			type : 'POST',
+			url : '/favorite',
+// 			data : JSON.stringify(data),
+// 			contentType : 'application/json; charset=utf-8',
+// 			dataType : 'json'
+		}).done(function(r){
+			if(r.statusCode === 200){
+				console.log(r);
+
+				alert('북마크불러오기 성공');
+			}
+
+		}).fail(function(){
+			alert('북마크불러오기 실패');
+		});
+		
+	})
+    </script>
   </body>
 </html>
 

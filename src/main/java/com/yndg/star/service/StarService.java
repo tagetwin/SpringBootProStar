@@ -13,7 +13,7 @@ public class StarService {
 
 	private StarRepository starRepository;
 	
-	// 팔로우한사람 글불러오기
+	// 스타 여부 검색
 	@Transactional
 	public int findStar(int userId, int boardId) {
 		

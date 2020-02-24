@@ -39,7 +39,7 @@
 		<div class="col-md-4">
 			<div class="row">
 				<div class="col-2 mb-3 text-center mt-4">
-					<a><img id="myProfile" src="/img/${principal.profile}" alt="" /></a>
+					<a><img id="myProfile" src="/media/${principal.profile}" alt="" /></a>
 				</div>
 				<div class="col-10">
 					<div class="font-weight-bold">${principal.username}</div>
@@ -56,6 +56,7 @@
 <!-- 부트스트랩 js, jquery 추가 -->
 <script src="/js/lib/jquery-3.4.1.min.js"></script>
 <script src="/js/lib/bootstrap.min.js"></script>
+<script src="/js/all.js"></script>
 <script>
 	var sel_file;
 	$(document).ready(function() {

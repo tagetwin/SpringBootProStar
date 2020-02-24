@@ -7,8 +7,6 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
 
-import com.yndg.star.model.board.dto.ResFindOneDto;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -16,31 +14,30 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.yndg.star.model.board.dto.ResCountDto;
+import com.yndg.star.model.board.dto.ResFindOneDto;
 import com.yndg.star.model.board.dto.ResMyListDto;
 import com.yndg.star.model.board.dto.ResWriteListDto;
 import com.yndg.star.model.user.MyUserDetails;
 import com.yndg.star.repository.BoardRepository;
 import com.yndg.star.repository.CommentRepository;
+import com.yndg.star.repository.FavoriteRepository;
 import com.yndg.star.repository.FollowRepository;
 import com.yndg.star.repository.StarRepository;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class BoardService {
 
 	@Value("${file.path}")
 	private String fileRealPath; // 서버에 배포하면 경로 변경해야함.
 
-	@Autowired
-	private BoardRepository rep;
-	
-	@Autowired
-	private CommentRepository commentRepository;
-	
-	@Autowired
-	private FollowRepository followRepository;
-	
-	@Autowired
-	private StarRepository starRepository;
+	private final BoardRepository rep;
+	private final CommentRepository commentRepository;
+	private final FollowRepository followRepository;
+	private final StarRepository starRepository;
+	private final FavoriteRepository favoriteRepository;
 	
 	// 팔로우한사람 글불러오기
 	@Transactional
@@ -53,6 +50,7 @@ public class BoardService {
 			dto.setListComment(commentRepository.resListComment(dto.getId()));
 			dto.setStar(starRepository.findStar(id, dto.getId()));
 //			System.out.println("스타여부 : "+dto.getStar());
+			dto.setFavorite(favoriteRepository.find(id, dto.getId()));
 		}
 		return board;
 	}

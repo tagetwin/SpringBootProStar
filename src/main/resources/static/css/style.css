@@ -56,11 +56,20 @@ a:visited {
 a:hover {
 	color: black;
 	text-decoration: none;
+	
 }
 @media screen and (max-width: 1400px) {
 	#myList_user {
 	 display : none;
 	}
 }
-
+i{
+	cursor: pointer;
+}
+.modal-body{
+	cursor: pointer;
+	text-align: center;
+	border-bottom: 1px solid gray;
+	
+}
     

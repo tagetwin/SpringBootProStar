@@ -22,4 +22,5 @@
 		WHERE boardId=#{id}
 		ORDER BY c.id DESC
 	</select>
+	
 </mapper>

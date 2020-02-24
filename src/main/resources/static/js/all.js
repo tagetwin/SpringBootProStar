@@ -15,3 +15,9 @@
           }
     });
 })(jQuery);
+
+//logout
+function logout(){
+	$('#logout_Form').submit();
+	alert('로그아웃되었습니다.');
+}
