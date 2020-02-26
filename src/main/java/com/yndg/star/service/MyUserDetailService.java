@@ -10,9 +10,10 @@ import com.yndg.star.model.user.MyUserDetails;
 import com.yndg.star.model.user.User;
 import com.yndg.star.repository.UserRepository;
 
+
 @Service
 public class MyUserDetailService implements UserDetailsService {
-	
+
 	@Autowired
 	UserRepository userRepository;
 	
@@ -32,9 +33,5 @@ public class MyUserDetailService implements UserDetailsService {
 		
 		return user;
 	}
-
-
-	
-	
 	
 }

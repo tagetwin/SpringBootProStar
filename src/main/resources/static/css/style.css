@@ -81,4 +81,19 @@ i{
 	height: 300px;
 
 }
+#footer li {
+	list-style-type: none;
+	display: inline;
+	font-size: small;
+}
+
+.h1 {
+	color: black;
+	font-style: italic;
+	text-align: center;
+}
+
+.card-body {
+	color: gray;
+}
     

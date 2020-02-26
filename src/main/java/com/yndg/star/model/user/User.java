@@ -18,14 +18,14 @@ public class User{
 	private String username;
 	private String password;
 	private String email;
-	private int phoneNum;
+	private String  phoneNum;
 	private String profile;
 	private Date createDate;
 	private String role;
 	private String info;
 	
 	@Builder
-	public User(String username, String password, String email, int phoneNum, String profile, String role, String info) {
+	public User(String username, String password, String email, String phoneNum, String profile, String role, String info) {
 		this.username = username;
 		this.password = password;
 		this.email = email;
@@ -35,30 +35,5 @@ public class User{
 		this.info = info;
 	}
 
-//	@Override
-//	public Collection<? extends GrantedAuthority> getAuthorities() {
-//		Collection<SimpleGrantedAuthority> collectors = new ArrayList<>();
-//		collectors.add(new SimpleGrantedAuthority("ROLE_"+role));
-//		return collectors;
-//	}
-//
-//	@Override
-//	public boolean isAccountNonExpired() {
-//		return true;
-//	}
-//
-//	@Override
-//	public boolean isAccountNonLocked() {
-//		return true;
-//	}
-//
-//	@Override
-//	public boolean isCredentialsNonExpired() {
-//		return true;
-//	}
-//
-//	@Override
-//	public boolean isEnabled() {
-//		return true;
-//	}
+
 }

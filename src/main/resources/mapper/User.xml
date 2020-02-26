@@ -21,4 +21,20 @@
 		SELECT username, profile, info FROM user WHERE id = #{id}
 	</select>
 	
+	<select id="profile" resultType="com.yndg.star.model.user.dto.ResProfileDto">
+		SELECT username, info, email, profile, phoneNum FROM user WHERE id = #{id}	
+	</select>
+	
+	<update id="update">
+		UPDATE user SET info = #{info}, email = #{email}, phoneNum = #{phoneNum} WHERE id = #{id}
+	</update>
+
+	<select id="findPassword" resultType="int">
+		SELECT COUNT(*) FROM user WHERE id = #{id} and password = #{password}
+	</select>
+
+	<update id="updatePassword">
+		UPDATE user SET password = #{password1} where id = #{id}
+	</update>
+
 </mapper>

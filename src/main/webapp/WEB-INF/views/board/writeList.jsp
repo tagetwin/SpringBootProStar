@@ -12,7 +12,7 @@
           <table style="height: 200px;">
             <tr>
               <td>${user.username}</td>
-              <td><button>프로필편집</button></td>
+              <td><a href="/user/profile" class="btn btn-outline-secondary"><b>프로필편집</b></a></td>
             </tr>
             <tr>
               <td>게시글 : ${countList.writeCount}</td>
