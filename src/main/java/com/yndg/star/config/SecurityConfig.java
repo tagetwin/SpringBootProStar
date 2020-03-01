@@ -64,7 +64,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		            throw new BadCredentialsException(username);
 		        }
 
-
 				return new UsernamePasswordAuthenticationToken(username, password, user.getAuthorities());
 			}
 
@@ -133,8 +132,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 						
 						String username = request.getParameter("username");
 						String rememberMe = Optional.ofNullable(request.getParameter("rememberMe")).orElse("off");
-						System.out.println(rememberMe);		
-						System.out.println("usernameCookie" + username);
+//						System.out.println(rememberMe);
+//						System.out.println("usernameCookie" + username);
 						if(rememberMe.equals("on")) {
 							Cookie cookie = new Cookie("usernameCookie", username);
 							cookie.setMaxAge(60*60);

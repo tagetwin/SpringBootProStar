@@ -7,16 +7,13 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
 
+import com.yndg.star.model.board.dto.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.yndg.star.model.board.dto.ResCountDto;
-import com.yndg.star.model.board.dto.ResFindOneDto;
-import com.yndg.star.model.board.dto.ResMyListDto;
-import com.yndg.star.model.board.dto.ResWriteListDto;
 import com.yndg.star.model.user.MyUserDetails;
 import com.yndg.star.repository.BoardRepository;
 import com.yndg.star.repository.CommentRepository;
@@ -147,5 +144,17 @@ public class BoardService {
 	@Transactional
 	public ResFindOneDto findOne(int id){
 		return rep.findOne(id);
+	}
+
+	// 글 전체 불러오기
+	@Transactional
+	public List<ResFindBoardDto> findBoard(int id){
+
+		return rep.findBoard(id);
+	}
+
+	// 글 검색 불러오기
+	public List<ResFindBoardDto> searchBoard(int id, String content){
+		return rep.searchBoard(id, content);
 	}
 }

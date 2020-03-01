@@ -29,12 +29,16 @@
 		UPDATE user SET info = #{info}, email = #{email}, phoneNum = #{phoneNum} WHERE id = #{id}
 	</update>
 
-	<select id="findPassword" resultType="int">
-		SELECT COUNT(*) FROM user WHERE id = #{id} and password = #{password}
+	<select id="findPassword" resultType="com.yndg.star.model.user.dto.ReqPasswordDto">
+		SELECT password FROM user WHERE id = #{id}
 	</select>
 
 	<update id="updatePassword">
 		UPDATE user SET password = #{password1} where id = #{id}
 	</update>
+
+	<select id="findUser" resultType="com.yndg.star.model.user.dto.ResFindUserDto">
+		SELECT id, username, profile FROM user WHERE NOT id = #{id}
+	</select>
 
 </mapper>

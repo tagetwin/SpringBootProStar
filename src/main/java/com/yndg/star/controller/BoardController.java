@@ -127,11 +127,28 @@ public class BoardController {
 		model.addAttribute("favorite", favoriteService.find(userId, id));
 		return "board/detail";
 	}
-	
+
+	// 내가쓴 페이지 글목록 불러오기
 	@GetMapping("/writeList")
 	public @ResponseBody List<ResWriteListDto> writeList(@AuthenticationPrincipal MyUserDetails principal){
 		
 		return boardservice.writeList(principal.getId());
 	}
-	
+
+	// 탐색
+	@GetMapping("/explore")
+	public String explore(Model model, @AuthenticationPrincipal MyUserDetails principal){
+		model.addAttribute("user", userService.findUser(principal.getId()));
+		model.addAttribute("board", boardservice.findBoard(principal.getId()));
+		return "board/explore";
+	}
+
+	// 검색
+	@GetMapping("/board/search")
+	public String search(Model model, @RequestParam String content, @AuthenticationPrincipal MyUserDetails principal){
+
+		boardservice.searchBoard(principal.getId(), content);
+		return "board/search";
+	}
+
 }

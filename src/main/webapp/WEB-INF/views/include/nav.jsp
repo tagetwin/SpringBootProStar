@@ -30,15 +30,15 @@
 		<a class="navbar-brand" href="/board/myList"><i class="far fa-star fa-2x"></i></a>
 		<form class="form-inline search" action="/board/search">
 			<input class="form-control mr-sm-2" style="width: 200px" type="text" placeholder="Search" />
-			<button class="btn btn-success" type="submit">Go</button>
+			<button class="btn btn-success" type="submit">검색</button>
 		</form>
 
 		<div class="collapse navbar-collapse" id="collapsibleNavbar">
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item"><a class="nav-link" href="/board/write"><i class="far fa-edit fa-2x"></i></a></li>
-				<li class="nav-item"><a class="nav-link" href="#"><i class="far fa-compass fa-2x"></i></a></li>
+				<li class="nav-item"><a class="nav-link" href="/explore"><i class="far fa-compass fa-2x explore"></i></a></li>
 				<li class="nav-item"><a class="nav-link" href="#"><i class="far fa-heart fa-2x"></i></a></li>
-				<li class="nav-item"><a class="nav-link" href="/board/${principal.username}"><i class="far fa-user fa-2x"></i></a></li>
+				<li class="nav-item"><a class="nav-link" href="/board/${principal.username}"><i class="far fa-user fa-2x writeList"></i></a></li>
 				<li class="nav-item">
 				<a class="nav-link" href="javascript:void(0);" onclick="logout()"><i class="fas fa-sign-out-alt fa-2x"></i></a>
 				</li>

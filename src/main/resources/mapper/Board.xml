@@ -41,5 +41,17 @@
 		ON b.userId=u.id
 		WHERE b.id = #{id}
 	</select>
-	
+
+	<select id="findBoard" resultType="com.yndg.star.model.board.dto.ResFindBoardDto">
+		SELECT id, fileName, starCount FROM board WHERE NOT userId = #{id} ORDER BY id DESC
+	</select>
+
+	<select id="searchBoard" resultType="com.yndg.star.model.board.dto.ResFindBoardDto">
+		SELECT id, fileName, starCount
+		FROM board
+		WHERE NOT userId = #{id}
+		  AND content LIKE CONCAT('%', #{content}, '%')
+		ORDER BY id DESC
+	</select>
+
 </mapper>

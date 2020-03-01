@@ -9,6 +9,8 @@ import com.yndg.star.repository.UserRepository;
 
 import lombok.AllArgsConstructor;
 
+import java.util.List;
+
 @AllArgsConstructor
 @Service
 public class UserService{
@@ -51,9 +53,14 @@ public class UserService{
 
 	// 비밀번호 확인
 	@Transactional
-	public int findPassword(ReqPasswordDto dto){
-		dto.setPassword(encoder.encode(dto.getPassword()));
-		return rep.findPassword(dto);
+	public boolean findPassword(ReqPasswordDto dto){
+//		dto.setPassword(encoder.encode(dto.getPassword()));
+		String rawPassword = dto.getPassword();
+		ReqPasswordDto dto1 = rep.findPassword(dto.getId());
+		String encodedPassword = dto1.getPassword();
+
+		return encoder.matches(rawPassword, encodedPassword);
+
 	}
 
 	// 비밀번호 변경
@@ -61,5 +68,11 @@ public class UserService{
 	public int updatePassword(int id, String password1){
 
 		return rep.updatePassword(id, encoder.encode(password1));
+	}
+
+	// 유저 가져오기
+	@Transactional
+	public List<ResFindUserDto> findUser(int id){
+		return rep.findUser(id);
 	}
 }

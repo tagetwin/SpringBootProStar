@@ -19,7 +19,7 @@
 					<img src="/media/${profile.profile}" width="50px" alt="">
 				</div>
 				<div class="col-md-8 pt-2">
-					<a>프로필 사진 바꾸기</a>
+					<input type="file" id="img_btn"/>프로필 사진 바꾸기
 				</div>
 			</div>
 		

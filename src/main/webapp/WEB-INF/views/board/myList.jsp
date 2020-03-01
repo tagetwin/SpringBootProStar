@@ -90,7 +90,8 @@
 				<div class="modal-dialog modal-dialog-centered">
 					<div class="modal-content">
 						<div class="modal-body text-danger">부적절한 콘텐츠 신고</div>
-						<div class="modal-body text-danger">팔로우 취소</div>
+						<div class="modal-body text-danger">
+							<a href="/unfollow">팔로우 취소</a></div>
 						<div class="modal-body">
 							<a href="/board/detail/${board.id}">게시물로 이동</a>
 						</div>
@@ -201,7 +202,7 @@
 		alert(href);
 		location.href=href;
 		
-	})
+	});
     
 	$('.star').children('i').on('click',function(){
 		

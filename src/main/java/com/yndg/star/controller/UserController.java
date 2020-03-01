@@ -89,8 +89,8 @@ public class UserController {
 	@PutMapping("/user/updatePassword")
 	public ResponseEntity<?> updatePassword(@RequestBody ReqPasswordDto dto, @AuthenticationPrincipal MyUserDetails principal){
 		dto.setId(principal.getId());
-		int result = service.findPassword(dto);
-		if(result == 1){
+		boolean result = service.findPassword(dto);
+		if(!result){
 			return new ResponseEntity<RespCM>(new RespCM(400, "fail"), HttpStatus.BAD_REQUEST);
 		}else{
 			int result2 = service.updatePassword(dto.getId(), dto.getPassword1());
@@ -101,4 +101,5 @@ public class UserController {
 			}
 		}
 	}
+
 }

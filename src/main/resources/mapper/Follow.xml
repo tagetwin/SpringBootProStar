@@ -24,9 +24,7 @@
 		SELECT u.id, u.username
 		FROM user u LEFT JOIN follow f
 		ON f.followId = u.id
-		WHERE f.userId = {id}
+		WHERE f.userId = #{id}
 	</select>
-
-
 
 </mapper>

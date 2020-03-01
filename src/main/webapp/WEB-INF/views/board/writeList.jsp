@@ -63,6 +63,10 @@
     <script src="/js/lib/bootstrap.min.js"></script>
     <script src="/js/all.js"></script>
     <script>
+    $(function(){
+       $('.writeList').addClass('fas');
+    });
+
 	$('.album').on('mouseover', function(){
 		})
     $('#writeList_btn').on('click', function(){
