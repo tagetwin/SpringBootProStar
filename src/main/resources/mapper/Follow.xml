@@ -19,7 +19,13 @@
 	<delete id="unfollow">
 		DELETE FROM follow WHERE userid = #{userId} AND followId = #{followId} 
 	</delete>
-	
+
+	<select id="selectFollow" resultType="int">
+		SELECT COUNT(*) FROM follow WHERE userId = #{userId} AND followId = #{followId}
+	</select>
+
+
+
 	<select id="findFollower">
 		SELECT u.id, u.username
 		FROM user u LEFT JOIN follow f

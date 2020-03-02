@@ -1,6 +1,7 @@
 package com.yndg.star.service;
 
 import com.yndg.star.model.user.dto.*;
+import com.yndg.star.repository.FollowRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +18,8 @@ public class UserService{
 
 	private UserRepository rep;
 	private BCryptPasswordEncoder encoder;
-	
+	private final FollowRepository followRepository;
+
 	// 가입하기
 	@Transactional
 	public int join(ReqJoinDto dto) {
@@ -73,6 +75,10 @@ public class UserService{
 	// 유저 가져오기
 	@Transactional
 	public List<ResFindUserDto> findUser(int id){
-		return rep.findUser(id);
+		List<ResFindUserDto> list = rep.findUser(id);
+		for(ResFindUserDto dto : list){
+			dto.setFollow(followRepository.selectFollow(id, dto.getId()));
+		}
+		return list;
 	}
 }

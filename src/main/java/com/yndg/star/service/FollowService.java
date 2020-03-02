@@ -28,11 +28,20 @@ public class FollowService {
 
 	@Transactional
 	public int follow(FollowDto dto){
-		return repository.follow(dto);
+		int result = repository.selectFollow(dto.getUserId(), dto.getFollowId());
+		if(result == 0){
+			return repository.follow(dto);
+		}
+		return -1;
 	}
 
 	@Transactional
 	public int unfollow(FollowDto dto){
-		return repository.unfollow(dto);
+		int result = repository.selectFollow(dto.getUserId(), dto.getFollowId());
+		if(result == 1){
+			return repository.unfollow(dto);
+		}
+		return -1;
 	}
+
 }

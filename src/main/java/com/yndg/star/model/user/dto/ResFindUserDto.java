@@ -7,4 +7,5 @@ public class ResFindUserDto {
     private int id;
     private String username;
     private String profile;
+    private int follow;
 }
