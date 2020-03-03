@@ -2,6 +2,8 @@ package com.yndg.star.service;
 
 import com.yndg.star.model.user.dto.*;
 import com.yndg.star.repository.FollowRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,15 +11,24 @@ import org.springframework.transaction.annotation.Transactional;
 import com.yndg.star.repository.UserRepository;
 
 import lombok.AllArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.UUID;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Service
 public class UserService{
 
-	private UserRepository rep;
-	private BCryptPasswordEncoder encoder;
+	@Value("${file.path}")
+	private String fileRealPath; // 서버에 배포하면 경로 변경해야함.
+
+	private final UserRepository rep;
+	private final BCryptPasswordEncoder encoder;
 	private final FollowRepository followRepository;
 
 	// 가입하기
@@ -80,5 +91,27 @@ public class UserService{
 			dto.setFollow(followRepository.selectFollow(id, dto.getId()));
 		}
 		return list;
+	}
+
+	// 유저 프로필 업로드
+	@Transactional
+	public String upload(MultipartFile file, int id){
+		try {
+			UUID uuid = UUID.randomUUID();
+			String uuidFilename = uuid + file.getOriginalFilename();
+			Path filePath = Paths.get(fileRealPath+uuidFilename);
+			System.out.println(filePath);
+			Files.write(filePath, file.getBytes());
+			int result = rep.upload(uuidFilename, id);
+			if(result==1){
+				return uuidFilename;
+			}else{
+				return null;
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw new RuntimeException();
+		}
 	}
 }

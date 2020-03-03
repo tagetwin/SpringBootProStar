@@ -19,6 +19,7 @@ import com.yndg.star.model.user.dto.ReqProfileDto;
 import com.yndg.star.service.UserService;
 
 import lombok.AllArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 @AllArgsConstructor
 @Controller
@@ -102,4 +103,9 @@ public class UserController {
 		}
 	}
 
+	// 프로필 이미지 바꾸기
+	@PostMapping("/upload")
+	public @ResponseBody String upload(@RequestParam MultipartFile file, @AuthenticationPrincipal MyUserDetails principal){
+		return service.upload(file, principal.getId());
+	}
 }

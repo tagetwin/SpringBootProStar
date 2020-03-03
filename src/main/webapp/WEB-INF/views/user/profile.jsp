@@ -15,12 +15,15 @@
 		</div>
 		<div class="col-md-8 pt-3" style="border: 1px solid gray;">
 			<div class="row">
-				<div class="col-md-4 text-right">
-					<img src="/media/${profile.profile}" width="50px" alt="">
+				<div class="col-md-4 text-right test">
+					<img id="test" src="/media/${profile.profile}" width="50px" alt="">
 				</div>
 				<div class="col-md-8 pt-2">
-					<input type="file" id="img_btn"/>프로필 사진 바꾸기
+					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+						Open modal
+					</button>
 				</div>
+
 			</div>
 		
 			<div class="row">
@@ -92,12 +95,80 @@
 		<li>© 2020 STAGRAM FROM YNDG</li>
 	</ul>
 </footer>
+
+<!-- The Modal -->
+<div class="modal fade" id="myModal">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+
+			<!-- Modal body -->
+			<div class="modal-body">
+			<form id="ajaxForm" method="post" >파일 업로드
+				<!-- display:none으로 화면상에서 파일 확인 창을 숨겨둔다 -->
+				<input type="file" id="ajaxFile" onChange="ajaxFileChange();" />
+<%--				<input type="button" onClick="ajaxFileUpload();" value="업로드"/>--%>
+			</form>
+			</div>
+			<div class="modal-body">
+				사진 삭제
+			</div>
+
+			<!-- Modal footer -->
+			<div class="modal-footer">
+				<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+			</div>
+
+		</div>
+	</div>
+</div>
 <!-- 부트스트랩 js, jquery 추가 -->
 <script src="/js/lib/jquery-3.4.1.min.js"></script>
 <script src="/js/lib/bootstrap.min.js"></script>
 <script src="/js/all.js"></script>
 <script>
+	// $('#ajaxFrom').on('click',function () {
+	// 	$("#ajaxFile").trigger('click');
+	// 	alert('');
+	// });
+	// function ajaxFileUpload() {
+	// 	// 업로드 버튼이 클릭되면 파일 찾기 창을 띄운다.
+	// 	$("#ajaxFile").on('click',false);
+	// 	alert('함수');
+	// }
 
+	function ajaxFileChange() {
+		// 파일이 선택되면 업로드를 진행한다.
+		ajaxFileTransmit();
+	}
+
+	function ajaxFileTransmit() {
+		let form = $("ajaxForm")[0];
+		let formData = new FormData(form);
+		formData.append("message", "파일 확인 창 숨기기");
+		formData.append("file", $("#ajaxFile")[0].files[0]);
+
+		$.ajax({
+			type : "POST",
+			url : "/upload",
+			contentType : false,
+			data : formData,
+			processData : false
+		}).done(function (r) {
+			console.log(r);
+			$('#test').attr("src",'/media/'+r);
+			$('#myModal').modal('hide');
+			// alert('업로드 성공');
+
+		}).fail(function () {
+			alert('업로드 실패');
+		});
+	}
+
+
+
+	$('#img_btn').on('click',function(){
+		$('#test').attr("src",'/media/star3.png');
+	});
 
 	// $('a').on('click',function(){
 	// 	$('.list-group-item').removeClass('active');

@@ -4,6 +4,7 @@ import com.yndg.star.model.user.dto.*;
 import org.springframework.stereotype.Repository;
 
 import com.yndg.star.model.user.MyUserDetails;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -19,4 +20,6 @@ public interface UserRepository {
 	public ReqPasswordDto findPassword(int id);
 	public int updatePassword(int id, String password1);
 	public List<ResFindUserDto> findUser(int id);
+	public int upload(String profile, int id);
+	public String selectProfile(int id);
 }

@@ -54,7 +54,7 @@
 
 			let bb = '#follow' + followId;
 			let onFollow = $(bb).val();
-			alert('팔로우상태: ' + onFollow);
+			// alert('팔로우상태: ' + onFollow);
 
 			let data = {
 				userId : userId,
@@ -74,7 +74,7 @@
 						btn.html('팔로잉');
 						btn.attr({"class":"btn btn-outline-dark"});
 						$(bb).val(1);
-						alert('팔로우 성공');
+						// alert('팔로우 성공');
 					}
 
 				}).fail(function(){
@@ -92,16 +92,13 @@
 						btn.html('팔로우');
 						btn.attr({"class":"btn btn-primary"});
 						$(bb).val(0);
-						alert('언팔로우 성공');
+						// alert('언팔로우 성공');
 					}
 
 				}).fail(function(){
 					alert('언팔로우 실패');
 				});
 			}
-
-
-
 		});
 	</script>
 </body>

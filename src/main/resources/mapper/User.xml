@@ -41,4 +41,11 @@
 		SELECT id, username, profile FROM user WHERE NOT id = #{id}
 	</select>
 
+	<update id="upload">
+		UPDATE user SET profile = #{profile} WHERE id = #{id}
+	</update>
+
+	<select id="selectProfile" resultType="string">
+		SELECT profile FROM user WHERE id = #{id}
+	</select>
 </mapper>
