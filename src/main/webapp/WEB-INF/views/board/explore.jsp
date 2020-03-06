@@ -44,9 +44,6 @@
 			$('.explore').addClass('fas');
 		});
 
-
-
-
 		$('.follow_btn').on('click', function () {
             let btn = $(this);
 			let userId = $('#userId').val();

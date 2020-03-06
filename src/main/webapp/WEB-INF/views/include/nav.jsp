@@ -29,7 +29,7 @@
 	<nav class="navbar navbar-expand-md bg-dark navbar-dark">
 		<a class="navbar-brand" href="/board/myList"><i class="far fa-star fa-2x"></i></a>
 		<form class="form-inline search" action="/board/search">
-			<input class="form-control mr-sm-2" style="width: 200px" type="text" placeholder="Search" />
+			<input name="content" class="form-control mr-sm-2" style="width: 200px" type="text" placeholder="Search" />
 			<button class="btn btn-success" type="submit">검색</button>
 		</form>
 

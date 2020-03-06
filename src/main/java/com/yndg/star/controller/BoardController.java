@@ -147,7 +147,7 @@ public class BoardController {
 	@GetMapping("/board/search")
 	public String search(Model model, @RequestParam String content, @AuthenticationPrincipal MyUserDetails principal){
 
-		boardservice.searchBoard(principal.getId(), content);
+		model.addAttribute("board",boardservice.searchBoard(principal.getId(), content));
 		return "board/search";
 	}
 
