@@ -54,4 +54,9 @@
 		ORDER BY id DESC
 	</select>
 
+	<!-- 페이징을 위한 -->
+	<select id="countPaging" resultType="int">
+		select count(*) from board where id > 0
+	</select>
+
 </mapper>

@@ -81,9 +81,8 @@ public class BoardService {
 	// 내가 쓴 글 리스트 불러오기
 	@Transactional
 	public List<ResWriteListDto> writeList(int id) {
-		
-		List<ResWriteListDto> board = rep.writeList(id);
-		return board;
+
+		return rep.writeList(id);
 	}
 	
 	// 게시물수, 팔로워수, 팔로우수
@@ -130,8 +129,8 @@ public class BoardService {
 		int selectResult = starRepository.findStar(principal.getId(), id);
 		if(selectResult == 1) {
 			int minusResult = rep.minusStarCount(id);
-			int deleteRestult = starRepository.deleteStar(principal.getId(), id);
-			if(minusResult == 1 && deleteRestult == 1) {
+			int deleteResult = starRepository.deleteStar(principal.getId(), id);
+			if(minusResult == 1 && deleteResult == 1) {
 				return 1;
 			}
 		}else {

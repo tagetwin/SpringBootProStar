@@ -199,7 +199,7 @@
 	
 	$('.modal-body').on('click', function(){
 		let href = $(this).children().attr('href');
-		alert(href);
+		// alert(href);
 		location.href=href;
 		
 	});
