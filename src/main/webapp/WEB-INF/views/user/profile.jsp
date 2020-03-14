@@ -7,21 +7,14 @@
 			<a href="/user/profile" class="list-group-item list-group-item-action active">프로필 편집</a>
 			<a href="/user/password" class="list-group-item list-group-item-action">비밀번호 변경</a>
 			<a href="#" class="list-group-item list-group-item-action">Third item</a>
-			<a href="#" class="list-group-item list-group-item-action">Fourth item</a>
-			<a href="#" class="list-group-item list-group-item-action">Fifth item</a>
-			<a href="#" class="list-group-item list-group-item-action">Sixth item</a>
-			<a href="#" class="list-group-item list-group-item-action">Seven item</a>
-			<a href="#" class="list-group-item list-group-item-action">Eight item</a>
 		</div>
 		<div class="col-md-8 pt-3" style="border: 1px solid gray;">
 			<div class="row">
 				<div class="col-md-4 text-right test">
-					<img id="test" src="/media/${profile.profile}" width="50px" alt="">
+					<img id="test" src="/media/${profile.profile}" style="width:50px; height: 50px; border-radius: 25px; cursor: pointer;"  alt="" data-toggle="modal" data-target="#myModal">
 				</div>
-				<div class="col-md-8 pt-2">
-					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-						Open modal
-					</button>
+				<div class="col-md-8 my-auto text-primary" data-toggle="modal" data-target="#myModal" style="cursor: pointer;">
+					프로필 사진 바꾸기
 				</div>
 
 			</div>
@@ -102,14 +95,16 @@
 		<div class="modal-content">
 
 			<!-- Modal body -->
-			<div class="modal-body">
-			<form id="ajaxForm" method="post" >파일 업로드
-				<!-- display:none으로 화면상에서 파일 확인 창을 숨겨둔다 -->
-				<input type="file" id="ajaxFile" onChange="ajaxFileChange();" />
-<%--				<input type="button" onClick="ajaxFileUpload();" value="업로드"/>--%>
-			</form>
+			<div class="modal-body upload">
+				<button class="text-primary btn btn-default w-100 mt-3" id="upload">사진 업로드</button>
+				<form id="ajaxForm" method="post">
+					<!-- display:none으로 화면상에서 파일 확인 창을 숨겨둔다 -->
+					<input type="file" id="ajaxFile" onChange="ajaxFileChange();" style="display: none;"/>
+	<%--				<input type="button" onClick="ajaxFileUpload();" value="업로드"/>--%>
+				</form>
 			</div>
-			<div class="modal-body">
+			
+			<div class="modal-body profile_default">
 				사진 삭제
 			</div>
 
@@ -117,7 +112,7 @@
 			<div class="modal-footer">
 				<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
 			</div>
-
+	
 		</div>
 	</div>
 </div>
@@ -126,15 +121,13 @@
 <script src="/js/lib/bootstrap.min.js"></script>
 <script src="/js/all.js"></script>
 <script>
-	// $('#ajaxFrom').on('click',function () {
-	// 	$("#ajaxFile").trigger('click');
-	// 	alert('');
-	// });
-	// function ajaxFileUpload() {
-	// 	// 업로드 버튼이 클릭되면 파일 찾기 창을 띄운다.
-	// 	$("#ajaxFile").on('click',false);
-	// 	alert('함수');
-	// }
+	$('.profile_default').on('click', function(){
+	});
+
+	$('#upload','#test').on('click',function () {
+		$('#ajaxFile').click();
+		
+	});
 
 	function ajaxFileChange() {
 		// 파일이 선택되면 업로드를 진행한다.

@@ -95,9 +95,6 @@
 						<div class="modal-body">
 							<a href="/board/detail/${board.id}">게시물로 이동</a>
 						</div>
-						<div class="modal-body">공유하기</div>
-						<div class="modal-body">링크 복사</div>
-						<div class="modal-body">퍼가기</div>
 						<div class="modal-body" data-dismiss="modal">취소</div>
 					</div>
 				</div>

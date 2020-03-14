@@ -31,7 +31,7 @@ ul li {
 </head>
 <body onload="document.login.username.focus();">
 	<div class="container">
-		<div class="card mt-5">
+		<div class="card mt-5 mx-auto" style="width: 400px;">
 			<div class="card-body">
 				<div class="h1 card-title">Stargram</div>
 				<div class="form-group">
@@ -70,24 +70,20 @@ ul li {
 				</div>
 			</div>
 		</div>
-		<div class="card mt-3">
+		<div class="card mt-3 mx-auto" style="width: 400px">
 			<div class="card-body text-center">
 				계정이 없으신가요? <a href="/">가입하기</a>
 			</div>
 		</div>
 		<div class="p text-center my-3 ">앱을 다운로드하세요</div>
-		<div class="row d-flex justify-content-center">
-			<div class="col-5">
-				<a href="https://itunes.apple.com/app/instagram/id389801252?pt=428156&amp;ct=igweb.signupPage.badge&amp;mt=8&amp;vt=lo"> <img
-					src="img/app.png" width="150" alt="" />
-				</a>
-			</div>
-			<div class="col-5">
-				<a
-					href="https://play.google.com/store/apps/details?id=com.instagram.android&amp;referrer=utm_source%3Dinstagramweb%26utm_campaign%3DsignupPage%26ig_mid%3D74B4FC1F-0139-42E8-A745-767A09ECEC92%26utm_content%3Dlo%26utm_medium%3Dbadge">
-					<img src="img/google.png" width="150" alt="" />
-				</a>
-			</div>
+		<div class="text-center">
+			<a href="https://itunes.apple.com/app/instagram/id389801252?pt=428156&amp;ct=igweb.signupPage.badge&amp;mt=8&amp;vt=lo"> <img
+				src="img/app.png" width="150" alt="" />
+			</a>
+			<a
+				href="https://play.google.com/store/apps/details?id=com.instagram.android&amp;referrer=utm_source%3Dinstagramweb%26utm_campaign%3DsignupPage%26ig_mid%3D74B4FC1F-0139-42E8-A745-767A09ECEC92%26utm_content%3Dlo%26utm_medium%3Dbadge">
+				<img src="img/google.png" width="150" alt="" />
+			</a>
 		</div>
 	</div>
 	<footer class="text-center mt-5">
