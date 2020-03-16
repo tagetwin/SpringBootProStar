@@ -39,7 +39,7 @@
 							<a href="/board/detail/${board.id}"><i class="far fa-comment fa-2x"></i></a>
 						</div>
 						<div class="ml-4">
-							<a><i class="far fa-share-square fa-2x"></i></a>
+<!-- 							<a><i class="far fa-share-square fa-2x"></i></a> -->
 						</div>
 						<div class="favorite ml-auto">
 							<c:choose>
@@ -93,7 +93,7 @@
 					</div>
 					<div class="col-10">
 						<input id="userId" type="hidden" value="${principal.id}"/>
-						<div class="font-weight-bold">${principal.username}</div>
+						<div class="font-weight-bold" id="username">${principal.username}</div>
 						<div class="p">${principal.info}</div>
 					</div>
 				</div>
@@ -110,24 +110,22 @@
       <div class="modal-content">
         
         <!-- Modal body -->
-        <div class="modal-body text-center text-danger" style="border-bottom: 1px solid gray;">
-         부적절한 콘텐츠 신고
-        </div>
-        <div class="modal-body text-center text-danger" style="border-bottom: 1px solid gray;">
-         팔로우 취소
-        </div>
+<!--         <div class="modal-body text-center text-danger" style="border-bottom: 1px solid gray;"> -->
+<!--          부적절한 콘텐츠 신고 -->
+<!--         </div> -->
+        
+<!--         <div class="modal-body text-center text-danger" style="border-bottom: 1px solid gray;"> -->
+<!--          팔로우 취소 -->
+<!--         </div> -->
+        
         <div class="modal-body text-center" style="border-bottom: 1px solid gray;">
          <a href="/board/detail/${board.id}">게시물로 이동</a>
         </div>
-        <div class="modal-body text-center" style="border-bottom: 1px solid gray;">
-         공유하기
+        <c:if test="${board.userId eq principal.id}">
+        <div id="delete" class="modal-body text-center text-danger" style="border-bottom: 1px solid gray;">
+         삭제
         </div>
-        <div class="modal-body text-center" style="border-bottom: 1px solid gray;">
-         링크 복사
-        </div>
-        <div class="modal-body text-center" style="border-bottom: 1px solid gray;">
-         퍼가기
-        </div>
+        </c:if>
         <div class="modal-body text-center" data-dismiss="modal" style="border-bottom: 1px solid gray;">
          취소
         </div>
@@ -141,6 +139,29 @@
 <script src="/js/lib/bootstrap.min.js"></script>
 <script src="/js/all.js"></script>
 <script>
+$('#delete').on('click', function(){
+
+	let id = $('.id').val();
+	let username = $('#username').text();
+	$.ajax({
+
+		type : 'DELETE',
+		url : '/board/detail/'+id,
+// 		dataType : 'json'
+	}).done(function(r){
+		if(r.statusCode === 200){
+//				console.log(r);
+			alert('삭제성공');
+			location.href="/board/"+username;
+		}
+
+	}).fail(function(){
+		alert('삭제 실패');
+	});
+	
+})
+
+
 $('.favorite').on('click',function(e){
 	e.preventDefault();
 	let a = $(this).children();

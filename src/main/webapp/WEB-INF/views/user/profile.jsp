@@ -6,7 +6,7 @@
 		<div class="col-md-4 list-group">
 			<a href="/user/profile" class="list-group-item list-group-item-action active">프로필 편집</a>
 			<a href="/user/password" class="list-group-item list-group-item-action">비밀번호 변경</a>
-			<a href="#" class="list-group-item list-group-item-action">Third item</a>
+<!-- 			<a href="#" class="list-group-item list-group-item-action">Third item</a> -->
 		</div>
 		<div class="col-md-8 pt-3" style="border: 1px solid gray;">
 			<div class="row">
@@ -124,7 +124,7 @@
 	$('.profile_default').on('click', function(){
 	});
 
-	$('#upload','#test').on('click',function () {
+	$('#upload').on('click',function () {
 		$('#ajaxFile').click();
 		
 	});

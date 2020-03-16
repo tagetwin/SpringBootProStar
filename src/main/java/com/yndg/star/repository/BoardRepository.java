@@ -21,4 +21,5 @@ public interface BoardRepository {
 	public ResFindOneDto findOne(int id);
 	public List<ResFindBoardDto> findBoard(int id);
 	public List<ResFindBoardDto> searchBoard(int id, String content);
+	public int delete(int id);
 }

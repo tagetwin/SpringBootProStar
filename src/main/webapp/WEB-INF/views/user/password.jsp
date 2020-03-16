@@ -6,19 +6,15 @@
 		<div class="col-md-4 list-group">
 			<a href="/user/profile" class="list-group-item list-group-item-action">프로필 편집</a>
 			<a href="/user/password" class="list-group-item list-group-item-action active">비밀번호 변경</a>
-			<a href="#" class="list-group-item list-group-item-action">Third item</a>
-			<a href="#" class="list-group-item list-group-item-action">Fourth item</a>
-			<a href="#" class="list-group-item list-group-item-action">Fifth item</a>
-			<a href="#" class="list-group-item list-group-item-action">Sixth item</a>
-			<a href="#" class="list-group-item list-group-item-action">Seven item</a>
-			<a href="#" class="list-group-item list-group-item-action">Eight item</a>
+<!-- 			<a href="#" class="list-group-item list-group-item-action">Third item</a> -->
+			
 		</div>
 		<div class="col-md-8 pt-3" style="border: 1px solid gray;">
 			<div class="row">
 				<div class="col-sm-4 text-right">
-					<img src="/media/${principal.profile}" width="50px" alt="">
+<%-- 					<img src="/media/${principal.profile}" width="50px" alt=""> --%>
 				</div>
-				<div class="col-sm-8 pt-2">${principal.username}</div>
+<%-- 				<div class="col-sm-8 pt-2">${principal.username}</div> --%>
 			</div>
 			<br/>
 			<div class="row">

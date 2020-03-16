@@ -1,24 +1,28 @@
 package com.yndg.star.service;
 
-import com.yndg.star.model.user.dto.*;
-import com.yndg.star.repository.FollowRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.yndg.star.repository.UserRepository;
-
-import lombok.AllArgsConstructor;
-import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.yndg.star.model.user.dto.ReqJoinDto;
+import com.yndg.star.model.user.dto.ReqPasswordDto;
+import com.yndg.star.model.user.dto.ReqProfileDto;
+import com.yndg.star.model.user.dto.ResFindUserDto;
+import com.yndg.star.model.user.dto.ResProfileDto;
+import com.yndg.star.model.user.dto.ResUserInfoDto;
+import com.yndg.star.repository.FollowRepository;
+import com.yndg.star.repository.UserRepository;
+
+import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Service
@@ -34,10 +38,13 @@ public class UserService{
 	// 가입하기
 	@Transactional
 	public int join(ReqJoinDto dto) {
-		String password =  encoder.encode(dto.getPassword());
-		dto.setPassword(password);
-
-		return rep.join(dto);
+		if(rep.duplicate(dto.getUsername()) == 1) {
+			return -1;
+		}else {
+			dto.setPassword(encoder.encode(dto.getPassword()));
+			return rep.join(dto);
+		}
+		
 	}
 	// 유저네임으로 아이디 찾기
 	@Transactional

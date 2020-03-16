@@ -1,12 +1,16 @@
 package com.yndg.star.repository;
 
-import com.yndg.star.model.user.dto.*;
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import com.yndg.star.model.user.MyUserDetails;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
+import com.yndg.star.model.user.dto.ReqJoinDto;
+import com.yndg.star.model.user.dto.ReqPasswordDto;
+import com.yndg.star.model.user.dto.ReqProfileDto;
+import com.yndg.star.model.user.dto.ResFindUserDto;
+import com.yndg.star.model.user.dto.ResProfileDto;
+import com.yndg.star.model.user.dto.ResUserInfoDto;
 
 @Repository
 public interface UserRepository {
@@ -22,4 +26,5 @@ public interface UserRepository {
 	public List<ResFindUserDto> findUser(int id);
 	public int upload(String profile, int id);
 	public String selectProfile(int id);
+	public int duplicate(String username);
 }

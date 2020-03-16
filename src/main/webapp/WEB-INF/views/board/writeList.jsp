@@ -29,10 +29,13 @@
       </div>
       <hr />
       <div class="d-flex justify-content-center mb-2">
+      	<c:if test="${principal.username eq user.username}">
         <div class="mr-5"><button class="btn" id="writeList_btn">게시물</button></div>
-        <div class="mr-5"><button class="btn">IGTV</button></div>
+<!--         <div class="mr-5"><button class="btn">IGTV</button></div> -->
+ 		
         <div class="mr-5"><button class="btn" id="favorite_btn">저장됨</button></div>
-        <div><button class="btn">태그됨</button></div>
+        </c:if>
+<!--         <div><button class="btn">태그됨</button></div> -->
       </div>
     
     <div class="listorwrite">  

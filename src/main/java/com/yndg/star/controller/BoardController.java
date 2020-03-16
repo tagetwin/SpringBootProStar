@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.yndg.star.model.RespCM;
-import com.yndg.star.model.board.dto.ResCountDto;
 import com.yndg.star.model.board.dto.ResMyListDto;
 import com.yndg.star.model.board.dto.ResWriteListDto;
 import com.yndg.star.model.star.dto.StarCountDto;
@@ -43,11 +42,11 @@ public class BoardController {
 	private FavoriteService favoriteService;
 
 	// 팔로우한 사람 게시물 불러오기
-	@GetMapping("/board/myList")
+	@GetMapping("/board/list")
 	public String myListBoard(Model model, @AuthenticationPrincipal MyUserDetails principal) {
 		List<ResMyListDto> board = boardservice.myListBoard(principal.getId());
 		model.addAttribute("board", board);
-		return "board/myList";
+		return "board/list";
 	}
 
 	// 글쓰기 페이지로
@@ -78,15 +77,9 @@ public class BoardController {
 	public String writeList(Model model, @PathVariable String username) {
 
 		int id = (Integer)userService.findIdByUsername(username);
-
-		List<ResWriteListDto> dto = boardservice.writeList(id);
-		model.addAttribute("board", dto);
-
-		ResUserInfoDto userDto = userService.findUserById(id);
-		model.addAttribute("user", userDto);
-
-		ResCountDto countDto = boardservice.countList(id);
-		model.addAttribute("countList", countDto);
+		model.addAttribute("board", boardservice.writeList(id));
+		model.addAttribute("user", userService.findUserById(id));
+		model.addAttribute("countList", boardservice.countList(id));
 		return "board/writeList";
 	}
 
@@ -150,5 +143,14 @@ public class BoardController {
 		model.addAttribute("board",boardservice.searchBoard(principal.getId(), content));
 		return "board/search";
 	}
-
+	
+	// 삭제
+	@DeleteMapping("/board/detail/{id}")
+	public ResponseEntity<?> delete(@PathVariable int id) {
+		
+		if(boardservice.delete(id)==1) {
+			return new ResponseEntity<RespCM>(new RespCM(200, "ok"), HttpStatus.OK);
+		}
+		return new ResponseEntity<RespCM>(new RespCM(500, "fail"), HttpStatus.INTERNAL_SERVER_ERROR);
+	}
 }

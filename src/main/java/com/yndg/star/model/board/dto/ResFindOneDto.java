@@ -14,6 +14,7 @@ public class ResFindOneDto {
 	private String fileName;
 	private String content;
 	private int starCount;
+	private int userId;
 	private String profile;
 //	private String comment;
 //	private String commentUsername;

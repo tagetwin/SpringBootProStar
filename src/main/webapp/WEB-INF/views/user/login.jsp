@@ -62,8 +62,11 @@ ul li {
 					</form>
 					
 				</div>
-				<div class="p text-center mb-3">
-					<a href="#">페이스북으로 로그인</a>
+<!-- 				<div class="p text-center mb-3"> -->
+<!-- 					<a href="#">페이스북으로 로그인</a> -->
+<!-- 				</div> -->
+				<div class="text-center">
+				<fb:login-button scope="public_profile,email" data-auto-logout-link="true" data-onlogin="checkLoginState();" ></fb:login-button>
 				</div>
 				<div class="p text-center text-small">
 					<a href="#"><small>비밀번호를 잊으셨나요?</small></a>
@@ -106,47 +109,70 @@ ul li {
 <script src="/js/lib/jquery-3.4.1.min.js"></script>
 <script src="/js/lib/bootstrap.min.js"></script>
 <script>
-// $('#login_btn').on('click', function() {
 
-// 	var data = {
-// 		username : $('#username').val(),
-// 		password : $('#password').val()
-// 	}
+window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '2535910483294028',
+      cookie     : true,
+      xfbml      : true,
+      version    : 'v6.0'
+    });
+      
+    FB.AppEvents.logPageView();   
 
-// 	$.ajax({
-// 		type : 'POST', // 로그인만 예외로 POST. GET을 쓰면 주소에 남기때문에
-// 		url : '/login',
-// 		data : data,
-// 		contentType : 'application/x-www-form-urlencoded; charset=utf-8',
-// 		dataType : 'json'
+    FB.getLoginStatus(function(response) {
+      
+//   	  if (response.status === 'connected') {
+//   	  	console.log(response.authResponse.userID);
+  	  	
+//   	  }
+  	});
 
-// 	}).done(function(r) {
-// 		if(r.statusCode == 200){
-// 			console.log(r);
-// 			alert('로그인 성공');
-// 			location.href = "/"
-// 		}else if(r.statusCode == 400){
-// 			console.log(r);
-// 			alert('로그인 실패');
-// 		}
+//     FB.api('/me', function(response) {
+//         console.log(JSON.stringify(response));
+//     });
+    
+  };
 
-// 	}).fail(function(r) {
-// 		console.log(r);
-// 		alert('로그인 실패2');
-		
-// 		var check =r.responseJSON;
-		
-// 		if(check.username != null){
-// 			$('#username_check').append('<small>'+check.username+'</small>');
-// 		}
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "https://connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
 
-// 		if(check.password != null){
-// 			$('#password_check').append('<small>'+check.password+'</small>');	
-// 		}
+  
+  function checkLoginState() {
+	  FB.getLoginStatus(function(response) {
+	    statusChangeCallback(response);
+	  });
+	}
 
-// 	});
-// })
+  function statusChangeCallback(response) {
+      console.log('statusChangeCallback');
+      console.log(response);
+      // The response object is returned with a status field that lets the
+      // app know the current login status of the person.
+      // Full docs on the response object can be found in the documentation
+      // for FB.getLoginStatus().
+      if (response.status === 'connected') {
+          // Logged into your app and Facebook.
+          console.log('Welcome!  Fetching your information.... ');
+          FB.api('/me', function (response) {
+              console.log('Successful login for: ' + response.name);
+              document.getElementById('status').innerHTML =
+                'Thanks for logging in, ' + response.name + '!';
+          });
+      } else {
+          // The person is not logged into your app or we are unable to tell.
+          document.getElementById('status').innerHTML = 'Please log ' +
+            'into this app.';
+      }
+  }
 
+
+  
 // 엔터키 치면 바로 로그인 되게	
 $("#password").keydown(function(key) {
 	if (key.keyCode == 13) {//키가 13이면 실행 (엔터는 13)

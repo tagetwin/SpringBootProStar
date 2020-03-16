@@ -90,7 +90,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //		http.csrf().disable();
 		http.csrf().csrfTokenRepository(new CookieCsrfTokenRepository());
 		http.authorizeRequests() // request 요청을
-				.antMatchers("/board/myList", "/user/profile") // 이 주소는 인증해야한다
+				.antMatchers("/board/list", "/user/profile") // 이 주소는 인증해야한다
 				
 				.authenticated().antMatchers("/admin/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_MANAGER')")
 				.anyRequest().permitAll()
@@ -138,12 +138,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 							Cookie cookie = new Cookie("usernameCookie", username);
 							cookie.setMaxAge(60*60);
 							response.addCookie(cookie);
-							response.sendRedirect("/board/myList");
+							response.sendRedirect("/explore");
 						}else {
 							Cookie cookie = new Cookie("usernameCookie", "");
 							cookie.setMaxAge(0);
 							response.addCookie(cookie);
-							response.sendRedirect("/board/myList");
+							response.sendRedirect("/explore");
 						}
 						
 						

@@ -1,19 +1,17 @@
 package com.yndg.star.controller;
 
-import com.yndg.star.model.RespCM;
-import com.yndg.star.model.favorite.dto.ResFavoriteDto;
-import com.yndg.star.model.follow.dto.FollowDto;
-import com.yndg.star.model.user.MyUserDetails;
-import com.yndg.star.service.FavoriteService;
-import com.yndg.star.service.FollowService;
-import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.List;
+import com.yndg.star.model.RespCM;
+import com.yndg.star.model.follow.dto.FollowDto;
+import com.yndg.star.service.FollowService;
+
+import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @Controller

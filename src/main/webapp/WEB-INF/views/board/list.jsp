@@ -9,7 +9,7 @@
 				<div class="card">
 					<div class="card-header d-flex">
 						<div>
-							<a href="#"><img class="otherProfile" src="/media/${board.profile}" alt="이미지가 없습니다." /></a><a
+							<a href="/board/${board.username}"><img class="otherProfile" src="/media/${board.profile}" alt="이미지가 없습니다." /></a><a
 								href="/board/${board.username}">${board.username}</a>
 						</div>
 						<div class="ml-auto more">
@@ -37,7 +37,7 @@
 							<a href="/board/detail/${board.id}"><i class="far fa-comment fa-2x"></i></a>
 						</div>
 						<div class="ml-4">
-							<a><i class="far fa-share-square fa-2x"></i></a>
+<!-- 							<a><i class="far fa-share-square fa-2x"></i></a> -->
 						</div>
 						<div class="favorite ml-auto">
 							<c:choose>
@@ -89,7 +89,6 @@
 			<div class="modal" id="myListModal_${board.id}">
 				<div class="modal-dialog modal-dialog-centered">
 					<div class="modal-content">
-						<div class="modal-body text-danger">부적절한 콘텐츠 신고</div>
 						<div class="modal-body text-danger">
 							<a href="/unfollow">팔로우 취소</a></div>
 						<div class="modal-body">
@@ -111,9 +110,9 @@
 						<div class="p">${principal.info}</div>
 					</div>
 				</div>
-				<div class="card">
-					<div class="card-body"></div>
-				</div>
+<!-- 				<div class="card"> -->
+<!-- 					<div class="card-body"></div> -->
+<!-- 				</div> -->
 			</div>
 		</div>
 	</div>

@@ -58,7 +58,9 @@ public class BoardService {
 
 		try {
 			UUID uuid = UUID.randomUUID();
-			String uuidFilename = uuid + fileName.getOriginalFilename();
+			System.out.println("0"+fileName.getOriginalFilename());
+			System.out.println("replace"+fileName.getOriginalFilename().replace(" ",""));
+			String uuidFilename = uuid + fileName.getOriginalFilename().trim().replace(" ","");
 			//nio
 			Path filePath = Paths.get(fileRealPath+uuidFilename);
 			System.out.println(filePath);
@@ -155,5 +157,10 @@ public class BoardService {
 	// 글 검색 불러오기
 	public List<ResFindBoardDto> searchBoard(int id, String content){
 		return rep.searchBoard(id, content);
+	}
+	
+	// 글 삭제
+	public int delete(int id) {
+		return rep.delete(id);
 	}
 }
