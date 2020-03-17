@@ -121,4 +121,9 @@ public class UserService{
 			throw new RuntimeException();
 		}
 	}
+	
+	// 유저 프로필 삭제
+	public int delete_profile(int id) {
+		return rep.delete_profile(id);
+	}
 }

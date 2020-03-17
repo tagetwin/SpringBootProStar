@@ -118,4 +118,15 @@ public class UserController {
 	public @ResponseBody String upload(@RequestParam MultipartFile file, @AuthenticationPrincipal MyUserDetails principal){
 		return service.upload(file, principal.getId());
 	}
+
+	// 프로필 이미지 삭제
+	@PutMapping("/delete_profile")
+	public ResponseEntity<?> delete_profile(@AuthenticationPrincipal MyUserDetails principal){
+		
+		if(service.delete_profile(principal.getId())==1){
+			return new ResponseEntity<RespCM>(new RespCM(200, "ok"), HttpStatus.OK);
+		}
+		return new ResponseEntity<RespCM>(new RespCM(500, "fail"), HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
 }

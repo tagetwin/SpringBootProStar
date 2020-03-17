@@ -11,7 +11,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/ynd?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/ynd?characterEncoding=UTF-8&serverTimezone=UTC&allowPublicKeyRetrieval=true&useSSL=false
     username: ynd
     password: 1234
     driver-class-name: com.mysql.cj.jdbc.Driver

@@ -122,6 +122,18 @@
 <script src="/js/all.js"></script>
 <script>
 	$('.profile_default').on('click', function(){
+		
+		$.ajax({
+			type : "PUT",
+			url : "/delete_profile",
+			dataType : 'json'
+		}).done(function (r) {
+			console.log(r);
+			$('#test').attr("src",'/media/star.png');
+			$('#myModal').modal('hide');
+		}).fail(function () {
+			alert('삭제 실패');
+		});
 	});
 
 	$('#upload').on('click',function () {

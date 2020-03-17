@@ -27,4 +27,5 @@ public interface UserRepository {
 	public int upload(String profile, int id);
 	public String selectProfile(int id);
 	public int duplicate(String username);
+	public int delete_profile(int id);
 }

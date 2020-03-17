@@ -52,4 +52,8 @@
 	<select id="selectProfile" resultType="string">
 		SELECT profile FROM user WHERE id = #{id}
 	</select>
+	
+	<update id="delete_profile">
+		UPDATE user SET profile = 'star.png' WHERE id = #{id}
+	</update>
 </mapper>
